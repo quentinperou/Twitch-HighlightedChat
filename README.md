@@ -19,9 +19,9 @@ _Inspired by [Ponce](https://twitch.tv/ponce)_
 - Moderators can push their message on website with command "`!+hmsg <MESSAGE>`"
 
 ## Changelog
-To see the list of recent changes, see [Releases section](https://github.com/quentinperou/Twitch-HighlightedChat/releases).
+To see the list of recent changes, see [Releases section](https://github.com/quentinperou/Twitch-HighlightedChat-lite/releases).
 
-To see the progress of new features development, see the [Project section](https://github.com/quentinperou/Twitch-HighlightedChat/projects/2).
+To see the progress of new features development, see the [Project section](https://github.com/quentinperou/Twitch-HighlightedChat-lite/projects/1).
 
 ## Resources
 This projetc use:
@@ -31,3 +31,7 @@ This projetc use:
 ***
 ## Developer
 - [QuentinPerou](https://github.com/quentinperou) ► Twitch : https://twitch.tv/quentinperou
+
+
+
+<!--  lite-v1.2  -->
