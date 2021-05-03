@@ -201,8 +201,8 @@
     function addMessage(user, message, flags, self, extra, isArchive) {
         if (isArchive == undefined)
             isArchive = false;
-        console.log(extra);
-        console.log(flags);
+        // console.log(extra);
+        // console.log(flags);
         let thisMsgId = extra.id;
         let leMessage = message.toString();
 
