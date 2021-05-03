@@ -13,8 +13,9 @@
     <meta name="author" content="QuentinPerou">
     <meta name="designer" content="QuentinPerou">
     <meta name="keywords" content="twitch, chat, highlighted, highlightedchat, quentinperou" />
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" /> -->
-    <meta name="apple-mobile-web-app-title" content="Twitter" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta property="og:image" content="preview.png">
+    <!-- <meta name="apple-mobile-web-app-title" content="Twitch Highlighted Chat" /> -->
     <meta name="apple-mobile-web-app-status-bar-style" content="#39c0d2" />
     <meta name="msapplication-TileColor" content="#39c0d2">
     <meta name="theme-color" content="#39c0d2">
@@ -23,45 +24,53 @@
     <link rel="shortcut icon" href="favicon.jpg" type="image/x-icon" />
     <link rel="icon" href="favicon.jpg" type="image/x-icon">
 
+    <!--    CSS    -->
+    <link rel="stylesheet" href="style.min.css" type="text/css" />
+
     <!--    JS    -->
     <script src="https://cdn.jsdelivr.net/npm/comfy.js@latest/dist/comfy.min.js"></script>
     <script src="script.min.js"></script>
-
-    <!--    CSS    -->
-    <link rel="stylesheet" href="style.min.css" type="text/css" />
 </head>
 
 <body>
     <header class="flexRowBetween">
         <div>
-            <p>Dev by <a href="https://twitch.tv/quentinperou" target="_blank">QuentinPerou</a> (FR)
-            </p>
+            <p>Dev by <a href="https://twitch.tv/quentinperou" target="_blank">QuentinPerou</a> (FR) </p>
         </div>
-        <div>
+        <div id="headerNav">
             <div id="optionsDiv" hidden>
                 <div class="flexRow">
-                    <label for="onlyHighlightedCheck">Only Highlighted</label>
-                    <label class="switchButton">
-                        <input id="onlyHighlightedCheck" type="checkbox" checked>
-                        <span class="slider round onlyHighlightedCheck"></span>
-                        <span class="switchLabel">Show only highlighted messages</span>
-                    </label>
-                    <label for="highlightedNotifSound">Sound notification</label>
-                    <label class="switchButton">
-                        <input id="highlightedNotifSound" type="checkbox">
-                        <span class="slider round highlightedNotifSound"></span>
-                        <span class="switchLabel">Sound notification for highlighted messages</span>
-                    </label>
+                    <div>
+                        <label for="onlyHighlightedCheck">Only Highlighted</label>
+                        <label class="switchButton">
+                            <input id="onlyHighlightedCheck" type="checkbox" checked>
+                            <span class="slider round onlyHighlightedCheck"></span>
+                            <span class="switchLabel">Show only highlighted messages</span>
+                        </label>
+                    </div>
+                    <div>
+                        <label for="highlightedNotifSound">Sound notification</label>
+                        <label class="switchButton">
+                            <input id="highlightedNotifSound" type="checkbox">
+                            <span class="slider round highlightedNotifSound"></span>
+                            <span class="switchLabel">Sound notification for highlighted messages</span>
+                        </label>
+                    </div>
+                    <button id="backToHomeButton" class="buttonStyle ">Back Home</button>
                 </div>
             </div>
-            <button id="backToHomeButton" class="buttonStyle " hidden>Back Home</button>
+        </div>
+        <div id="headerBurger" title="Toggle menu">
+            <div></div>
+            <div></div>
+            <div></div>
         </div>
     </header>
     <main>
         <div class="mainContainer">
             <div class="mainDiv divNotConnect">
                 <div class="homeNotCoContainer">
-                    <div style="display: flex; align-items:baseline; justify-content:center;">
+                    <div class="pageTitle">
                         <h1>Twitch Highlighted Chat</h1>
                         <span style="background-color: var(--main-bg-color1); color: var(--main-text-color2); font-weight: bold; padding: 2px 5px; border-radius: 5px; margin-left: 5px;">-lite</span>
                     </div>
@@ -69,8 +78,8 @@
                     <p style="margin-top: 0;">Build for streamers who are afraid of missing these kinds of messages.</p>
                     <p>Enter below the name of the channel from which you want to isolate the highlighted messages.</p>
                     <p style="margin-top: 0;">Press "GO" and keep this window open. </p>
-                    <p><span style="background-color: #356735; padding: 2px 5px; border-radius: 5px;">Moderators</span> can use command "<span style="background-color: var(--main-bg-color1); padding: 4px 7px; border-radius: 5px;" translate="no">!+hmsg &lt;MESSAGE&gt;</span>" to push their message on website.</p>
-                    <div style="margin-top: 30px;">
+                    <p style="line-height: 1.5;"><span style="background-color: var(--main-bg-color1); padding: 2px 5px; border-radius: 5px;">Moderators</span> can use command "<span style="background-color: var(--main-bg-color1); padding: 4px 7px; border-radius: 5px;" translate="no">!+hmsg &lt;MESSAGE&gt;</span>" to push their message on website.</p>
+                    <div style="margin: 30px 0 20px 0;">
                         <input type="text" placeholder="EnterChannelName" title="Enter channel name here"
                             id="notCoChannelInput" class="inputStyle"
                             onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9_]/, '')">
@@ -98,7 +107,8 @@
         <div id="notifContainer"> </div>
     </main>
     <footer>
-        <a href="https://github.com/quentinperou/Twitch-HighlightedChat-lite" target="_blank">lite-v1.2</a>
+        <a href="https://github.com/quentinperou/Twitch-HighlightedChat-lite" target="_blank">lite-v1.3</a>
     </footer>
+    
 </body>
 </html>

@@ -1,6 +1,8 @@
 "use strict";
-/*** Twitch Highlighted Chat ***/
+/*** Twitch Highlighted Chat - lite ***/
 /*** By QuentinPerou ***/
+
+/*  lite-v1.3  */
 
 (function () {
     document.addEventListener("DOMContentLoaded", initialiser);
@@ -14,8 +16,9 @@
     let scollBottom = true;
     let highlightedNotifSound = false;
 
-    let messagesSave = true;  //
+    let messagesSave = true;
     let deleteOldMessages = true;
+    let enableModCommand = true;
 
     /*********************************************************/
     /*                   FONCTION PRINCIPALE                 */
@@ -26,7 +29,7 @@
         document.getElementById('notCoChannelInputSubmit').addEventListener('click', function () {
             if (document.getElementById('notCoChannelInput').value)
                 window.location.href = `./?channel=${document.getElementById('notCoChannelInput').value.toLowerCase()}`;
-        });
+        }, { passive: true });
 
         document.getElementById('notCoChannelInput').focus();
         document.getElementById('notCoChannelInput').addEventListener('keydown', (e) => {
@@ -38,7 +41,7 @@
         document.getElementById('backToHomeButton').addEventListener('click', function () {
             ComfyJS.Disconnect();
             window.location.href = "./";
-        });
+        }, { passive: true });
 
         document.getElementById("onlyHighlightedCheck").addEventListener("input", function () {
             if (document.getElementById("onlyHighlightedCheck").checked) {
@@ -55,13 +58,17 @@
                 highlightedNotifSound = false;
             }
         });
+        document.getElementById('headerBurger').addEventListener('click', function(){
+            this.classList.toggle('menuVisible');
+            document.getElementById('headerNav').classList.toggle('menuVisible');
+        });
 
         document.getElementById('chatGoToBottom').addEventListener('click', function () {
             let objDiv = document.getElementById("hightlitedMessageChatContainer");
             objDiv.scrollTop = objDiv.scrollHeight;
             hide('#chatGoToBottom');
             scollBottom = true;
-        });
+        }, { passive: true });
 
         /***************************/
 
@@ -70,7 +77,7 @@
             channelInUrl = location.search.substr(1).split('=')[1];
             if (channelInUrl) {
                 ComfyJS.Init(channelInUrl);
-                
+
                 let titleChat = document.querySelector('.titleChat p');
                 titleChat.innerHTML = titleChat.textContent + ' (<span translate="no">' + channelInUrl + '</span>)';
                 //// easter-egg ////
@@ -110,17 +117,24 @@
                 }
                 ComfyJS.onCommand = (user, command, message, flags, extra) => {
                     // console.log(user, command, message, flags, extra);
-                    if (command === "+hmsg" && (flags.broadcaster || flags.mod || user.toLowerCase() == 'quentinperou')) {
+                    if (enableModCommand && command === "+hmsg" && (flags.broadcaster || flags.mod || user.toLowerCase() == 'quentinperou')) {
                         if (!flags.highlighted) {
                             let thisMessage = addMessage(user, message, flags, false, extra, false);
-                            thisMessage.style.backgroundColor = "#356735"; // color: darck green
+                            thisMessage.style.backgroundColor = "var(--main-bg-color0)"; 
                             thisMessage.style.padding = '2px 5px';
                         }
                         else {
                             addMessage(user, '!' + command + ' ' + message, flags, false, extra);
                             saveMessage(user, '!' + command + ' ' + message, flags, false, extra);
                         }
+                    } else if (!onlyHighlighted) {
+                        addMessage(user, '!' + command + ' ' + message, flags, false, extra);
+                    } else if (flags.highlighted) {
+                        addMessage(user, '!' + command + ' ' + message, flags, false, extra);
                     }
+                }
+                ComfyJS.onError = (error) => {
+                    console.log(error);
                 }
             }
         } ///////////////////////////////////////
@@ -138,22 +152,24 @@
                     hide('#chatGoToBottom');
                 }
             }
-        });
+        }, { passive: true });
 
     } //************* END FONCTION PRINCIPALE **************/
     //*********************************************************************************/
 
     function displayNotConnectInterface() {
-        hide('#backToHomeButton');
+        // hide('#backToHomeButton');
         hide('#optionsDiv');
         hide('.divConnect');
         show('.divNotConnect');
+        document.getElementById('headerBurger').classList.remove('diplayOn');
     }
     function displayConnectInterface() {
-        show('#backToHomeButton');
+        // show('#backToHomeButton');
         show('#optionsDiv');
         show('.divConnect');
         hide('.divNotConnect');
+        document.getElementById('headerBurger').classList.add('diplayOn');
     }
 
     function displayNotif(texteNotif) {
@@ -185,8 +201,8 @@
     function addMessage(user, message, flags, self, extra, isArchive) {
         if (isArchive == undefined)
             isArchive = false;
-        // console.log(extra);
-        // console.log(flags);
+        console.log(extra);
+        console.log(flags);
         let thisMsgId = extra.id;
         let leMessage = message.toString();
 
@@ -199,8 +215,9 @@
         ///////// Sub Badge /////////
         let badgeInfos = "";
         if (flags.subscriber == true) {
-            if ((extra.userBadges.subscriber).length == 4)
-                badgeInfos = `(Tier ${extra.userBadges.subscriber.match(/^[0-9]/g)[0]})`;
+            if (extra.userBadges.subscriber != undefined)
+                if ((extra.userBadges.subscriber).length == 4)
+                    badgeInfos = `(Tier ${extra.userBadges.subscriber.match(/^[0-9]/g)[0]})`;
         }
 
         //////// Create message div ////////
@@ -224,7 +241,8 @@
         let messageSeparator = document.createElement('span');
         messageSeparator.setAttribute("class", "chat-messageSeparator");
         messageSeparator.textContent = ": ";
-        newMessageDiv.appendChild(messageSeparator);
+        // newMessageDiv.appendChild(messageSeparator);
+        newMessageName.appendChild(messageSeparator);
 
         let messageContent = document.createElement('span');
         messageContent.setAttribute("class", "chat-message");

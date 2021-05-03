@@ -1,0 +1,5 @@
+# highlightedchat-lite.quentinperou.fr/robots.txt
+# Tell Google not to crawl any images in the img folder,
+# because they won't be useful in Google Search results.
+User-agent: googlebot
+Disallow: /img/

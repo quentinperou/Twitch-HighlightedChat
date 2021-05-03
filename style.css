@@ -1,5 +1,7 @@
-/*** Twitch Highlighted Chat ***/
+/*** Twitch Highlighted Chat - lite ***/
 /*** By QuentinPerou ***/
+
+/*  lite-v1.3  */
 
 * {
     font-family: arial;
@@ -34,7 +36,6 @@ button {
     --main-text-color0: white;
     --main-text-color2: #bdc2c4;
     --main-color0: #161c22;
-    --main-color1: #34495E;
     --main-color2: #39c0d2;
     --main-color3: #47e9ff;
     --main-highlight-color: #755ebc;
@@ -72,7 +73,7 @@ button {
 }
 
 .inputStyle::placeholder {
-    color: var(--main-color1);
+    color: var(--main-bg-color0);
 }
 
 /*********************************************************/
@@ -105,25 +106,64 @@ header a {
     color: var(--main-text-color2);
 }
 
-header div:last-child {
+#headerNav {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    z-index: 2;
 }
 
-/*************** BOUTON THEME ***************/
-#optionsDiv {
+#headerBurger {
+    cursor: pointer;
+    padding: 4px;
+    /* background-color: brown; */
+    height: 30px;
+    width: 30px;
+    box-sizing: border-box;
+    display: none;
+    flex-direction: column;
     justify-content: center;
-    margin-right: 20px;
+    align-items: center;
+    border-radius: 5px;
+}
+
+#headerBurger.menuVisible {
+    background-color: #8d8f917a;
+}
+
+#headerBurger div {
+    width: 20px;
+    height: 3px;
+    background-color: var(--main-text-color0);
+    border-radius: 2px;
+    margin: 0 0 3px 0;
+}
+
+#headerBurger div:last-child {
+    margin: 0;
 }
 
 #optionsDiv label[for] {
-    margin: 0 8px 0 18px;
+    margin: 0 8px 0;
     color: white;
     font-weight: normal;
 }
 
-/*************** BOUTON ***************/
+#optionsDiv label[for]:nth-child(3) {
+    margin: 0 8px 0 18px;
+}
+
+#optionsDiv #backToHomeButton {
+    margin-left: 18px;
+}
+
+#optionsDiv div.flexRow div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+/*************** BOUTON THEME ***************/
 /* Rounded sliders */
 .slider.round {
     border-radius: 34px;
@@ -195,6 +235,7 @@ input:checked+.slider:before {
     background-color: var(--main-bg-color2);
     border-radius: 3px;
     display: none;
+    z-index: 5;
 }
 
 .switchButton .slider:hover+.switchLabel {
@@ -211,6 +252,7 @@ main {
     align-items: flex-start;
     height: calc(100% - 50px);
     width: 100%;
+    min-height: 150px;
 }
 
 .mainContainer {
@@ -236,11 +278,12 @@ main {
     height: 40px;
 }
 
-.mainDiv.divNotConnect{
+.mainDiv.divNotConnect {
     overflow-y: scroll;
     scrollbar-width: thin;
     scrollbar-color: #c9c9c9 transparent;
 }
+
 .homeNotCoContainer {
     color: var(--main-text-color0);
     display: flex;
@@ -249,8 +292,19 @@ main {
     align-items: center;
 }
 
+.pageTitle {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+}
+
 .homeNotCoContainer h1 {
     text-decoration: underline;
+    text-align: center;
+}
+
+.homeNotCoContainer p {
+    text-align: center;
 }
 
 
@@ -276,6 +330,7 @@ main {
 .titleChat p {
     text-transform: uppercase;
     font-weight: bold;
+    text-align: center;
 }
 
 .titleChat .extLink {
@@ -337,7 +392,7 @@ main {
 
 .chat-messageSeparator {
     margin: 0 3px;
-    margin-top: 4px;
+    /* margin-top: 4px; */
     color: var(--main-text-color0);
     font-weight: bold;
 }
@@ -410,7 +465,7 @@ main {
     background-color: var(--main-bg-color2);
     padding: 10px 50px;
     border-radius: 20px;
-    z-index: 50px;
+    z-index: 50;
     position: relative;
     top: 0;
     transition: top 400ms ease-in-out;
@@ -444,3 +499,67 @@ footer a {
     color: black;
     text-decoration: none;
 }
+
+
+/*********************************************************/
+/*                      RESPONSIVE                       */
+/*********************************************************/
+@media screen and (max-width:750px) {
+    #headerNav {
+        top: 50px;
+        width: 100%;
+        position: absolute;
+        left: 0;
+        /* background-color: var(--main-bg-color2); */
+        background-color: var(--main-bg-color0);
+        padding: 5px;
+        box-sizing: border-box;
+        flex-wrap: wrap;
+        display: none;
+        box-shadow: 0 5px 5px var(--main-bg-color2);
+    }
+
+    #headerNav.menuVisible {
+        display: block;
+    }
+
+    #headerBurger.diplayOn {
+        display: flex;
+    }
+
+    #optionsDiv div.flexRow {
+        /* flex-wrap: wrap; */
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+    }
+
+    #optionsDiv div.flexRow>* {
+        margin: 4px 0;
+        margin-right: 2%;
+    }
+
+    .switchLabel {
+        left: inherit;
+        right: 0;
+        transform: inherit;
+    }
+
+    .pageTitle {
+        flex-direction: column;
+        align-items: center;
+    }
+
+}
+
+@media screen and (max-width:550px) {
+    .chat-lineMessage {
+        flex-direction: column;
+    }
+
+    .chat-lineNameDiv {
+        margin-bottom: 4px;
+    }
+}
+
+@media screen and (max-width:260px) {}
