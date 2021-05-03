@@ -14,6 +14,12 @@
     <meta name="designer" content="QuentinPerou">
     <meta name="keywords" content="twitch, chat, highlighted, highlightedchat, quentinperou" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="twitter:card" content="summary" />
+    <!-- <meta name="twitter:site" content="@quentinperou"/> -->
+    <meta name="twitter:creator" content="@quentinperou" />
+    <meta property="og:url" content="https://highlightedchat-lite.netlify.app" />
+    <meta property="og:title" content="Twitch Highlighted Chat" />
+    <meta property="og:description" content="A tool for Twitch streamers. This web page allows you to display only the highlighted messages of your Twitch chat." />
     <meta property="og:image" content="preview.png">
     <!-- <meta name="apple-mobile-web-app-title" content="Twitch Highlighted Chat" /> -->
     <meta name="apple-mobile-web-app-status-bar-style" content="#39c0d2" />
@@ -30,6 +36,7 @@
     <!--    JS    -->
     <script src="https://cdn.jsdelivr.net/npm/comfy.js@latest/dist/comfy.min.js"></script>
     <script src="script.min.js"></script>
+    
 </head>
 
 <body>
@@ -78,7 +85,7 @@
                     <p style="margin-top: 0;">Build for streamers who are afraid of missing these kinds of messages.</p>
                     <p>Enter below the name of the channel from which you want to isolate the highlighted messages.</p>
                     <p style="margin-top: 0;">Press "GO" and keep this window open. </p>
-                    <p style="line-height: 1.5;"><span style="background-color: var(--main-bg-color1); padding: 2px 5px; border-radius: 5px;">Moderators</span> can use command "<span style="background-color: var(--main-bg-color1); padding: 4px 7px; border-radius: 5px;" translate="no">!+hmsg &lt;MESSAGE&gt;</span>" to push their message on website.</p>
+                    <p style="line-height: 1.5;"><span style="background-color: var(--main-bg-color1); padding: 2px 5px; border-radius: 5px;">Moderators</span> can use command "<span style="background-color: var(--main-bg-color1); padding: 4px 7px; border-radius: 5px; white-space: nowrap;" translate="no">!+hmsg &lt;MESSAGE&gt;</span>" to push their message on website.</p>
                     <div style="margin: 30px 0 20px 0;">
                         <input type="text" placeholder="EnterChannelName" title="Enter channel name here"
                             id="notCoChannelInput" class="inputStyle"
@@ -109,6 +116,6 @@
     <footer>
         <a href="https://github.com/quentinperou/Twitch-HighlightedChat-lite" target="_blank">lite-v1.3</a>
     </footer>
-    
+
 </body>
 </html>
