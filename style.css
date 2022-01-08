@@ -1,7 +1,7 @@
 /*** Twitch Highlighted Chat - lite ***/
 /*** By QuentinPerou ***/
 
-/*  lite-v1.3  */
+/*  lite-v2  */
 
 * {
     font-family: arial;
@@ -30,6 +30,7 @@ button {
 }
 
 :root {
+    /****** ORIGINAL THEME ******/
     --main-bg-color0: #34495E;
     --main-bg-color1: #273240;
     --main-bg-color2: #18181B;
@@ -38,16 +39,46 @@ button {
     --main-color0: #161c22;
     --main-color2: #39c0d2;
     --main-color3: #47e9ff;
+    --main-button-ratio-color:#39c0d2;
+    --main-button-color:#39c0d2;
+    --main-button-text-color:var(--main-color0);
+    --main-background-transparent-1:#18181bbd;
+    --main-bg-title: var(--main-color2);
+    --main-title-border: none; 
+    --main-box-shadow: 0 5px 5px var(--main-bg-color2);
+
+    /****** DARK THEME ******/
+    /* --main-bg-color0: #0E0E10;
+    --main-bg-color1: #18181B;
+    --main-bg-color2: #1F1F23;
+    --main-text-color0: white;
+    --main-text-color2: #6c6c6c;
+    --main-color0: #161c22;
+    --main-color2: #9147FF;
+    --main-color3: #772CE8;
+    --main-button-ratio-color:#a970ff;
+    --main-button-color:#9147FF;
+    --main-button-text-color:var(--main-text-color0);
+    --main-background-transparent-1:#35353bbd;
+    --main-bg-title: var(--main-bg-color1);
+    --main-title-border: 1px solid var(--main-text-color2);
+    --main-box-shadow: 0 5px 5px var(--main-bg-color1); */
+
     --main-highlight-color: #755ebc;
     --main-highlight-read-color: #473c66;
+
+    /* --color-opac-b-7: rgba(0,0,0,0.4); */
+    /* --main-box-shadow: 0 4px 8px var(--color-opac-b-7),0 0px 4px var(--color-opac-b-7); */
+
+    --header-height: 40px;
 }
 
 .buttonStyle {
     border-radius: 20px;
     border: none;
     padding: 5px 12px;
-    background-color: var(--main-color2);
-    color: var(--main-color0) !important;
+    background-color: var(--main-button-color);
+    color: var(--main-button-text-color) !important;
     font-weight: bold;
     font-size: 16px;
     cursor: pointer;
@@ -97,13 +128,14 @@ header {
     justify-content: space-between;
     background-color: var(--main-bg-color1);
     padding: 5px 10px;
-    height: 50px;
+    height: var(--header-height);
     box-sizing: border-box;
 }
 
 header p,
 header a {
     color: var(--main-text-color2);
+    font-size: 0.7rem;
 }
 
 #headerNav {
@@ -143,18 +175,19 @@ header a {
     margin: 0;
 }
 
-#optionsDiv label[for] {
+#optionsDiv .divSliderButton label[for] {
     margin: 0 8px 0;
     color: white;
     font-weight: normal;
 }
 
-#optionsDiv label[for]:nth-child(3) {
+#optionsDiv .divSliderButton label[for]:nth-child(3) {
     margin: 0 8px 0 18px;
 }
 
 #optionsDiv #backToHomeButton {
     margin-left: 18px;
+    margin-top: 12px;
 }
 
 #optionsDiv div.flexRow div {
@@ -214,7 +247,7 @@ header a {
 }
 
 input:checked+.slider {
-    background-color: var(--main-color2);
+    background-color: var(--main-button-ratio-color);
 }
 
 input:checked+.slider:before {
@@ -242,6 +275,67 @@ input:checked+.slider:before {
     display: block;
 }
 
+#choiceTheme{
+    color: var(--main-text-color0);
+}
+
+.theme-title{
+margin-right: 10px;
+}
+
+/********* RATIO BUTTON ********/
+/* Customize the label (the container) */
+#choiceTheme .container {
+    position: relative;
+    padding-left: 24px;
+  }
+  
+  /* Hide the browser's default radio button */
+  #choiceTheme .container input {
+    opacity: 0;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom radio button */
+  #choiceTheme .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: var(--main-text-color2);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  /* When the radio button is checked, add a blue background */
+  #choiceTheme .container input:checked ~ .checkmark {
+    background-color: var(--main-button-ratio-color);
+  }
+  
+  /* Create the indicator (the dot/circle - hidden when not checked) */
+  #choiceTheme .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the indicator (dot/circle) when checked */
+  #choiceTheme .container input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the indicator (dot/circle) */
+  #choiceTheme .container .checkmark:after {
+    top: 6px;
+    left: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--main-bg-color1);;
+  }
+
 /*********************************************************/
 /*                          PAGE                         */
 /*********************************************************/
@@ -250,7 +344,7 @@ main {
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
-    height: calc(100% - 50px);
+    height: calc(100% - var(--header-height));
     width: 100%;
     min-height: 150px;
 }
@@ -317,20 +411,43 @@ main {
 }
 
 .titleChat {
-    height: 50px;
-    background-color: var(--main-color2);
+    height: 40px;
+    background-color: var(--main-bg-title);
+    color: var(--main-text-color0);
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: default;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
+    border-bottom: var(--main-title-border)
+}
+
+.titleChat div{
+    margin-right: 7px;
+    height: 80%;
+    max-height: 35px;
+    /* clip-path: circle(50%); */
+    border: 2px solid var(--main-color0);
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.titleChat img{
+    /* margin-right: 7px; */
+    /* height: 80%; */
+    /* max-height: 35px; */
+    /* clip-path: circle(50%); */
+    /* border: 2px solid var(--main-color0); */
+    /* border-radius: 50%; */
+    height: 100%;
 }
 
 .titleChat p {
     text-transform: uppercase;
     font-weight: bold;
     text-align: center;
+    margin: 0;
 }
 
 .titleChat .extLink {
@@ -360,7 +477,8 @@ main {
     bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #18181bbd;
+    /* background-color: #18181bbd; */
+    background-color: var(--main-background-transparent-1);
     color: var(--main-text-color0);
     padding: 8px 25px;
     cursor: pointer;
@@ -372,22 +490,25 @@ main {
 
 /******************* Message *******************/
 .chat-lineMessage {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
+    /* display: flex; */
+    /* justify-content: flex-start; */
+    /* align-items: flex-start; */
+    /* flex-direction: column; */
     padding: 10px;
 }
 
 .chat-lineNameDiv {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin-top: 4px;
+    /* display: flex; */
+    /* justify-content: flex-start; */
+    /* align-items: center; */
+    /* margin-top: 4px; */
+    display: inline-block;
 }
 
-.chat-lineNameDiv p {
-    margin: 0 7px 0 0;
+.chat-messageTime {
+    margin: 0 2px 0 0;
     color: var(--main-text-color2);
+    vertical-align: middle;
 }
 
 .chat-messageSeparator {
@@ -411,6 +532,7 @@ main {
     margin-top: 3px;
     word-break: break-word;
     word-wrap: break-word;
+    line-height: 1.5rem;
 }
 
 .chat-message.chat-message-withEmote {
@@ -438,7 +560,23 @@ main {
 
 .chat-lineBadge {
     width: 20px;
-    margin-right: 2px;
+    /* margin-right: 2px; */
+    vertical-align: middle;
+}
+
+.chat-message a {
+    color: var(--main-color2);
+    text-decoration: none;
+}
+
+.chat-message a:hover {
+    color: var(--main-color3);
+}
+
+.chat-messageMention{
+    background-color: var(--main-color0);
+    padding: 3px 6px;
+    border-radius: 50px;
 }
 
 /*********************************************************/
@@ -496,7 +634,7 @@ footer {
 footer a {
     margin: 0 0 0 2px;
     font-size: 0.5rem;
-    color: black;
+    color: var(--main-text-color2);
     text-decoration: none;
 }
 
@@ -504,7 +642,7 @@ footer a {
 /*********************************************************/
 /*                      RESPONSIVE                       */
 /*********************************************************/
-@media screen and (max-width:750px) {
+/* @media screen and (max-width:750px) { */
     #headerNav {
         top: 50px;
         width: 100%;
@@ -516,7 +654,7 @@ footer a {
         box-sizing: border-box;
         flex-wrap: wrap;
         display: none;
-        box-shadow: 0 5px 5px var(--main-bg-color2);
+        box-shadow: var(--main-box-shadow);
     }
 
     #headerNav.menuVisible {
@@ -545,14 +683,14 @@ footer a {
         transform: inherit;
     }
 
-    .pageTitle {
+    /* .pageTitle {
         flex-direction: column;
         align-items: center;
-    }
+    } */
 
-}
+/* } */
 
-@media screen and (max-width:550px) {
+/* @media screen and (max-width:550px) {
     .chat-lineMessage {
         flex-direction: column;
     }
@@ -560,6 +698,6 @@ footer a {
     .chat-lineNameDiv {
         margin-bottom: 4px;
     }
-}
+} */
 
-@media screen and (max-width:260px) {}
+/* @media screen and (max-width:260px) {} */

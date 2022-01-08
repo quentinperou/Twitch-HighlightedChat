@@ -1,4 +1,8 @@
 # Twitch-HighlightedChat-lite  
+<!-- <h1 align='center'>Twitch-HighlightedChat-lite  </h1> -->
+<!-- <p align="center">
+  <a href="https://app.netlify.com/sites/highlightedchat-lite/deploys"><img src="https://api.netlify.com/api/v1/badges/f6529eb4-9a06-45b5-a860-8c6c962c71fb/deploy-status" alt="netlify badge"/></a>
+</p> -->
 
 <!-- This is the **lite** version of the project.   -->
 
@@ -30,6 +34,8 @@ To see the progress of new features development, see the [Project section](https
 ## Resources
 This projetc use:  
 - [ComfyJS](https://github.com/instafluff/ComfyJS)
+<!-- - [color.js](https://github.com/luukdv/color.js/) -->
+<!-- - [TinyColor](https://github.com/bgrins/TinyColor) -->
 
 
 ***
@@ -38,4 +44,4 @@ This projetc use:
 
 
 
-<!--  lite-v1.3  -->
+<!--  lite-v2  -->
