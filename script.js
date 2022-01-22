@@ -15,7 +15,6 @@
     let onlyHighlighted = true;
     let scollBottom = true;
     let highlightedNotifSound = false;
-
     let messagesSave = true;
     let deleteOldMessages = true;
     let enableModCommand = true;
@@ -45,12 +44,18 @@
             window.location.href = "./";
         }, { passive: true });
 
+        if (sessionStorage.getItem(`${storagePrefix}onlyHighlightedCheck`) != undefined) {
+            document.getElementById("onlyHighlightedCheck").checked = false;
+            onlyHighlighted = false;
+        }
         document.getElementById("onlyHighlightedCheck").addEventListener("input", function () {
             if (document.getElementById("onlyHighlightedCheck").checked) {
                 onlyHighlighted = true;
                 remove('[data-type="normal"]');
+                sessionStorage.removeItem(`${storagePrefix}onlyHighlightedCheck`);
             } else {
                 onlyHighlighted = false;
+                sessionStorage.setItem(`${storagePrefix}onlyHighlightedCheck`, false);
             }
         });
         document.getElementById("highlightedNotifSound").addEventListener("input", function () {
@@ -89,38 +94,13 @@
             });
         });
         function changeTheme(theme) {
-            if (theme == "original")
-                document.documentElement.style.cssText = `--main-bg-color0: #34495E;
-                        --main-bg-color1: #273240;
-                        --main-bg-color2: #18181B;
-                        --main-text-color0: white;
-                        --main-text-color2: #bdc2c4;
-                        --main-color0: #161c22;
-                        --main-color2: #39c0d2;
-                        --main-color3: #47e9ff;
-                        --main-button-ratio-color:#39c0d2;
-                        --main-button-color:#39c0d2;
-                        --main-button-text-color:var(--main-color0);
-                        --main-background-transparent-1:#18181bbd;
-                        --main-bg-title: var(--main-color2);
-                        --main-title-border: none; 
-                        --main-box-shadow: 0 5px 5px var(--main-bg-color2);`;
-            if (theme == "dark")
-                document.documentElement.style.cssText = `--main-bg-color0: #0E0E10;
-                        --main-bg-color1: #18181B;
-                        --main-bg-color2: #1F1F23;
-                        --main-text-color0: white;
-                        --main-text-color2: #6c6c6c;
-                        --main-color0: #161c22;
-                        --main-color2: #9147FF;
-                        --main-color3: #772CE8;
-                        --main-button-ratio-color:#a970ff;
-                        --main-button-color:#9147FF;
-                        --main-button-text-color:var(--main-text-color0);
-                        --main-background-transparent-1:#35353bbd;
-                        --main-bg-title: var(--main-bg-color1);
-                        --main-title-border: 1px solid var(--main-text-color2);
-                        --main-box-shadow: 0 5px 5px var(--main-bg-color1);`;
+            if (theme == "original") {
+                document.documentElement.classList.remove("styleDarkTheme");
+                document.documentElement.classList.add("styleOriginalTheme");
+            } if (theme == "dark") {
+                document.documentElement.classList.remove("styleOriginalTheme");
+                document.documentElement.classList.add("styleDarkTheme");
+            }
         }
         document.getElementById('hightlitedMessageChatContainer').addEventListener('click', function () {
             document.getElementById('headerBurger').classList.remove('menuVisible');
@@ -167,13 +147,6 @@
                         channelProfilePicture.appendChild(channelProfilePictureLink);
                         channelProfilePictureLink.appendChild(channelProfilePicturePic);
                         document.querySelector('.titleChat').insertBefore(channelProfilePicture, document.querySelector('.titleChat p'));
-                        ///// Color picker on profile picture /////
-                        // colorjs.prominent(body, { amount: 2, format: 'hex', group: 30 }).then(color => {
-                        //     console.log(color[0])
-                        //     let originalColor = tinycolor(color[0]);
-                        //     let newColorBright = originalColor.brighten(25).toString();
-                        //     document.documentElement.style.cssText = `--main-color2: ${color[0]}; --main-color3: ${newColorBright}; --main-highlight-color:#34495e; --main-highlight-read-color:#19242e;`;
-                        // })
                     });
 
                 //// easter-egg ////
@@ -185,7 +158,7 @@
                 displayConnectInterface();
 
                 ComfyJS.onConnected = (address, port, isFirstConnect) => {
-                    displayNotif(`Chat of <i>${channelInUrl.toUpperCase()}</i>`);
+                    displayNotif(`Connected to <i>${channelInUrl.toUpperCase()}</i> 's chat`);
                     ///// restore saved messages /////
                     if (messagesSave) {
                         if (sessionStorage.getItem(`${storagePrefix}messagesSave-${channelInUrl}`) != undefined) {
@@ -249,6 +222,10 @@
                 }
             }
         }, { passive: true });
+
+        let updateMsg = addMessage("► System ◄", "(22/01/2022) UPDATE ! Now you can change the color theme ! Go to menu ;) ", {}, false, {});
+        updateMsg.parentElement.style.backgroundColor="var(--bg-adminMsg)";
+        updateMsg.parentElement.addEventListener('click', function () {this.remove();});
 
     } //************* END FONCTION PRINCIPALE **************/
     //*********************************************************************************/
@@ -391,57 +368,22 @@
 
         ////// EMOTES
         let emoteInMessage = extra.messageEmotes;
-        console.log(emoteInMessage);
+        // console.log(emoteInMessage);
         if (emoteInMessage != null) {
             let emotesName = [];
             let messageTexte = messageFragment.textContent;
-            console.log(messageTexte);
+            // console.log(messageTexte);
             // messageFragment.remove();
             let messageWithEmote = messageTexte;
             for (const [key, value] of Object.entries(emoteInMessage)) {
                 for (const [key2, value2] of Object.entries(value)) {
-                    let born = value2.split('-');
-                    let emoteName = messageTexte.substring(born[0], parseInt(born[1], 10) + 1);
-
-                    // let part1 = messageTexte.substring(0, born[0]);
-                    // let part2 = messageTexte.substring(parseInt(born[1], 10) + 1);
-                    // console.log(1, part1);
-                    // console.log(2, part2);
-
-                    // let span1 = document.createElement('span');
-                    // span1.classList.add("messageFragment");
-                    // span1.textContent = part1;
-                    // messageContent.appendChild(span1);
-
-                    // let emoteImg = document.createElement('img');
-                    // emoteImg.src = `https://static-cdn.jtvnw.net/emoticons/v1/${key}/1.0`;
-                    // emoteImg.title = emoteName;
-                    // emoteImg.alt = emoteName;
-                    // emoteImg.classList.add('chat-messageEmote');
-                    // messageContent.appendChild(emoteImg);
-
-                    // let span2 = document.createElement('span');
-                    // span2.classList.add("messageFragment");
-                    // span2.textContent = part2;
-                    // messageContent.appendChild(span2);
-
-
-                    //////////// alede /////////
-                    // var element = document.createElement("img");
-                    // element.src = `https://static-cdn.jtvnw.net/emoticons/v1/${key}/1.0`;
-                    // messageContent.innerHTML= messageTexte.split(emoteName).join(stringToHTML(`<img src="https://static-cdn.jtvnw.net/emoticons/v1/${key}/1.0">`));
-
-                    // function stringToHTML(str) {
-                    //     var parser = new DOMParser();
-                    //     var doc = parser.parseFromString(str, 'text/html');
-                    //     return doc.body;
-                    // };
-                    ////////////////////////////
-
+                    let emotePosition = value2.split('-');
+                    // console.log("emotePosition:", value2);
+                    let emoteName = messageTexte.substring(emotePosition[0], parseInt(emotePosition[1], 10) + 1);
 
                     if (!(emotesName.some(elem => elem === emoteName))) {
-                    emotesName.push(emoteName);
-                    messageWithEmote = messageWithEmote.replaceAll(emoteName, `</span><img alt="${emoteName}" title="${emoteName}" class="chat-messageEmote" src="https://static-cdn.jtvnw.net/emoticons/v1/${key}/1.0"><span class="messageFragment">`);
+                        emotesName.push(emoteName);
+                        messageWithEmote = messageWithEmote.replaceAll(emoteName, `</span><img alt="${emoteName}" title="${emoteName}" class="chat-messageEmote" src="https://static-cdn.jtvnw.net/emoticons/v1/${key}/1.0"><span class="messageFragment">`);
                     }
                 }
             }
