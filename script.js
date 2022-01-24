@@ -2,7 +2,7 @@
 /*** Twitch Highlighted Chat - lite ***/
 /*** By QuentinPerou ***/
 
-/*  lite-v2  */
+/*  lite-v2.1  */
 
 (function () {
     document.addEventListener("DOMContentLoaded", initialiser);
@@ -78,14 +78,14 @@
         //         linkIsClickable = false;
         // });
 
-        if (sessionStorage.getItem(`${storagePrefix}theme`) != undefined) {
-            document.querySelector(`#choiceTheme input[value="${sessionStorage.getItem(`${storagePrefix}theme`)}"]`).checked = true;
-            changeTheme(sessionStorage.getItem(`${storagePrefix}theme`));
+        if (localStorage.getItem(`${storagePrefix}theme`) != undefined) {
+            document.querySelector(`#choiceTheme input[value="${localStorage.getItem(`${storagePrefix}theme`)}"]`).checked = true;
+            changeTheme(localStorage.getItem(`${storagePrefix}theme`));
         }
         document.querySelectorAll('#choiceTheme input').forEach(function (elm) {
             elm.addEventListener("input", function () {
                 if (elm.checked) {
-                    sessionStorage.setItem(`${storagePrefix}theme`, elm.value);
+                    localStorage.setItem(`${storagePrefix}theme`, elm.value);
                     console.log("theme:", elm.value);
                     changeTheme(elm.value);
                 }
@@ -102,9 +102,23 @@
                 document.documentElement.classList.add("styleDarkTheme");
             }
         }
-        document.getElementById('hightlitedMessageChatContainer').addEventListener('click', function () {
+        document.getElementsByClassName('mainContainer')[0].addEventListener('click', function () {
             document.getElementById('headerBurger').classList.remove('menuVisible');
             document.getElementById('headerNav').classList.remove('menuVisible');
+        });
+
+
+        document.getElementById('clearCacheButton').addEventListener('click', function () {
+            show('#popupDivContainer');
+        });
+        document.getElementById('clearCachePopupDelete').addEventListener('click', function () {
+            sessionStorage.clear();
+            localStorage.clear();
+            hide('#popupDivContainer');
+            displayNotif('Cache clear !');
+        });
+        document.getElementById('clearCachePopupCancel').addEventListener('click', function () {
+            hide('#popupDivContainer');
         });
 
         document.getElementById('headerBurger').addEventListener('click', function () {
@@ -161,13 +175,13 @@
                     displayNotif(`Connected to <i>${channelInUrl.toUpperCase()}</i> 's chat`);
                     ///// restore saved messages /////
                     if (messagesSave) {
-                        if (sessionStorage.getItem(`${storagePrefix}messagesSave-${channelInUrl}`) != undefined) {
-                            let savedElem = JSON.parse(sessionStorage.getItem(`${storagePrefix}messagesSave-${channelInUrl}`));
+                        if (localStorage.getItem(`${storagePrefix}messagesSave-${channelInUrl}`) != undefined) {
+                            let savedElem = JSON.parse(localStorage.getItem(`${storagePrefix}messagesSave-${channelInUrl}`));
                             savedElem.forEach(function (el) {
                                 if (el.isRead)
-                                    addMessage(el.user, el.message, el.flags, el.self, el.extra, true).setAttribute('read', '');
+                                    addMessage(el.user, el.message, el.flags, el.self, el.extra, true, new Date(el.date)).setAttribute('read', '');
                                 else
-                                    addMessage(el.user, el.message, el.flags, el.self, el.extra, true);
+                                    addMessage(el.user, el.message, el.flags, el.self, el.extra, true, new Date(el.date));
                             });
                         }
                     }
@@ -194,7 +208,8 @@
                         }
                         else {
                             addMessage(user, '!' + command + ' ' + message, flags, false, extra);
-                            saveMessage(user, '!' + command + ' ' + message, flags, false, extra);
+                            if (messagesSave)
+                                saveMessage(user, '!' + command + ' ' + message, flags, false, extra);
                         }
                     } else if (!onlyHighlighted) {
                         addMessage(user, '!' + command + ' ' + message, flags, false, extra);
@@ -224,25 +239,22 @@
         }, { passive: true });
 
         let updateMsg = addMessage("► System ◄", "(22/01/2022) UPDATE ! Now you can change the color theme ! Go to menu ;) ", {}, false, {});
-        updateMsg.parentElement.style.backgroundColor="var(--bg-adminMsg)";
-        updateMsg.parentElement.addEventListener('click', function () {this.remove();});
+        updateMsg.parentElement.style.backgroundColor = "var(--bg-adminMsg)";
+        updateMsg.parentElement.addEventListener('click', function () { this.remove(); });
 
     } //************* END FONCTION PRINCIPALE **************/
     //*********************************************************************************/
 
-    function displayNotConnectInterface() {
-        // hide('#backToHomeButton');
-        hide('#optionsDiv');
-        hide('.divConnect');
-        show('.divNotConnect');
-        document.getElementById('headerBurger').classList.remove('diplayOn');
-    }
     function displayConnectInterface() {
         // show('#backToHomeButton');
         show('#optionsDiv');
+        show('#optionsDiv div');
+        show('#choiceTheme');
+        show('#backToHomeButton');
+        show('#clearCacheButton');
         show('.divConnect');
         hide('.divNotConnect');
-        document.getElementById('headerBurger').classList.add('diplayOn');
+        document.getElementById('headerBurger').classList.add('displayOn');
     }
 
     function displayNotif(texteNotif) {
@@ -260,27 +272,32 @@
     }
 
     function saveMessage(user, message, flags, self, extra) {
-        if (sessionStorage.getItem(`${storagePrefix}messagesSave-${channelInUrl}`) == undefined) {
-            let msgToSave = { user, message, flags, self, extra, isRead: false };
-            sessionStorage.setItem(`${storagePrefix}messagesSave-${channelInUrl}`, JSON.stringify([msgToSave]));
+        if (localStorage.getItem(`${storagePrefix}messagesSave-${channelInUrl}`) == undefined) {
+            let msgToSave = { user, message, flags, self, extra, isRead: false, date: new Date() };
+            localStorage.setItem(`${storagePrefix}messagesSave-${channelInUrl}`, JSON.stringify([msgToSave]));
         } else {
-            let msgToSave = { user, message, flags, self, extra, isRead: false };
-            let data = JSON.parse(sessionStorage.getItem(`${storagePrefix}messagesSave-${channelInUrl}`));
+            let msgToSave = { user, message, flags, self, extra, isRead: false, date: new Date() };
+            let data = JSON.parse(localStorage.getItem(`${storagePrefix}messagesSave-${channelInUrl}`));
             data.push(msgToSave);
-            sessionStorage.setItem(`${storagePrefix}messagesSave-${channelInUrl}`, JSON.stringify(data));
+            localStorage.setItem(`${storagePrefix}messagesSave-${channelInUrl}`, JSON.stringify(data));
         }
     }
 
-    function addMessage(user, message, flags, self, extra, isArchive) {
+    function addMessage(user, message, flags, self, extra, isArchive, date) {
         if (isArchive == undefined)
             isArchive = false;
+        let dateUndefined = false;
+        if (date == undefined) {
+            date = new Date();
+            dateUndefined = true;
+        }
         // console.log(extra);
         // console.log(flags);
         // console.log(user, message, flags, self, extra, isArchive);
         let thisMsgId = extra.id;
         let leMessage = message.toString();
 
-        let messageDate = new Date();
+        let messageDate = date;
         let messagHours = "0" + messageDate.getHours();
         let messagMinutes = "0" + messageDate.getMinutes();
         messagHours = messagHours.substr(-2);
@@ -306,11 +323,18 @@
                                     ${flags.broadcaster ? '<img src="img/broadcaster.png" title="Broadcaster" class="chat-lineBadge">' : ''}
                                     ${flags.subscriber ? `<img src="img/sub.png" title="${extra.userState['badge-info'].match(/[0-9]+$/g)}-Month Subscriber ${badgeInfos}" class="chat-lineBadge">` : ''}
                                     <span class="chat-lineName" translate="no">${user}</span>`;
-        if (!isArchive) {
+        if (!isArchive || !dateUndefined) {
             let newMessageTime = document.createElement('span');
             newMessageTime.classList.add("chat-messageTime");
             newMessageTime.textContent = `${messagHours}:${messagMinutes}`;
             newMessageName.prepend(newMessageTime);
+            if(isArchive){
+                let newMessageDate = document.createElement('span');
+                newMessageDate.classList.add("chat-messageTime");
+                newMessageDate.textContent = `${((messageDate.getDate() + 1) < 10 ? '0' : '') + (messageDate.getDate())}/${((messageDate.getMonth() + 1) < 10 ? '0' : '') + (messageDate.getMonth() + 1)}/${messageDate.getFullYear()} - `;
+                newMessageTime.prepend(newMessageDate);
+                newMessageDiv.setAttribute("data-archive", true);
+            }
         }
 
         let messageSeparator = document.createElement('span');
@@ -327,7 +351,7 @@
             newMessageDiv.setAttribute("data-type", "highlighted");
             messageContent.setAttribute("title", "Click to mark as read");
             messageContent.addEventListener("click", function () {
-                let elemSave = JSON.parse(sessionStorage.getItem(`${storagePrefix}messagesSave-${channelInUrl}`));
+                let elemSave = JSON.parse(localStorage.getItem(`${storagePrefix}messagesSave-${channelInUrl}`));
                 let elemSaveThisIndex = elemSave.findIndex(elem => elem.extra.id == thisMsgId);
                 if (this.hasAttribute('read')) {
                     this.removeAttribute('read');
@@ -336,7 +360,7 @@
                     this.setAttribute('read', '');
                     elemSave[elemSaveThisIndex].isRead = true;
                 }
-                sessionStorage.setItem(`${storagePrefix}messagesSave-${channelInUrl}`, JSON.stringify(elemSave));
+                localStorage.setItem(`${storagePrefix}messagesSave-${channelInUrl}`, JSON.stringify(elemSave));
                 // console.log('Elem stored edit');
             });
             if (!isArchive) {

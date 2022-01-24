@@ -1,7 +1,7 @@
 /*** Twitch Highlighted Chat - lite ***/
 /*** By QuentinPerou ***/
 
-/*  lite-v2  */
+/*  lite-v2.1  */
 
 * {
   font-family: arial;
@@ -33,6 +33,7 @@ button {
   --main-highlight-color: #755ebc;
   --main-highlight-read-color: #473c66;
   --header-height: 40px;
+  --popup-bg-color: #18181bab;
 }
 
 /****** ORIGINAL THEME ******/
@@ -54,6 +55,10 @@ html.styleOriginalTheme {
   --main-box-shadow: 0 5px 5px var(--main-bg-color2);
   --title-text-color: black;
   --bg-adminMsg: var(--main-bg-color2);
+  --bg-header: var(--main-bg-color1);
+  --bg-navMenu: var(--main-bg-color0);
+  --warning-color: #ff5656;
+  --warning-color-hover: #ffaaa8;
 }
 
 /****** DARK THEME ******/
@@ -75,6 +80,10 @@ html.styleDarkTheme {
   --main-box-shadow: 0 5px 5px var(--main-bg-color1);
   --title-text-color: var(--main-text-color0);
   --bg-adminMsg: #2a707e;
+  --bg-header: #1f1f23;
+  --bg-navMenu: var(--bg-header);
+  --warning-color: #ff4f4d;
+  --warning-color-hover: #ffaaa8;
 }
 
 .buttonStyle {
@@ -82,7 +91,7 @@ html.styleDarkTheme {
   border: none;
   padding: 5px 12px;
   background-color: var(--main-button-color);
-  color: var(--main-button-text-color) !important;
+  color: var(--main-button-text-color);
   font-weight: bold;
   font-size: 16px;
   cursor: pointer;
@@ -92,6 +101,16 @@ html.styleDarkTheme {
 .buttonStyle:focus,
 .buttonStyle:hover {
   background-color: var(--main-color3);
+}
+
+.warningButton {
+  cursor: pointer;
+  background-color: var(--warning-color);
+  color: var(--main-bg-color1);
+}
+.warningButton:focus,
+.warningButton:hover {
+  background-color: var(--warning-color-hover);
 }
 
 .inputStyle {
@@ -130,7 +149,7 @@ html.styleDarkTheme {
 header {
   display: flex;
   justify-content: space-between;
-  background-color: var(--main-bg-color1);
+  background-color: var(--bg-header);
   padding: 5px 10px;
   height: var(--header-height);
   box-sizing: border-box;
@@ -194,10 +213,13 @@ header a {
   margin-top: 12px;
 }
 
-#optionsDiv div.flexRow div {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+#clearCacheButton {
+  font-weight: 100;
+}
+
+#optionsDiv .divSliderButton label {
+  display: inline-block;
+  vertical-align: middle;
 }
 
 /*************** BOUTON THEME ***************/
@@ -626,6 +648,54 @@ main {
 }
 
 /*********************************************************/
+/*                         POPUP                         */
+/*********************************************************/
+#popupDivContainer {
+  position: absolute;
+  left: 0;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: var(--popup-bg-color);
+  z-index: 10;
+}
+#popupContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#popupContainer .onePopup {
+  background-color: var(--main-bg-color2);
+  color: var(--main-text-color0);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 40px;
+  border-radius: 20px;
+  box-sizing: border-box;
+  max-width: 90%;
+}
+
+.onePopup div{
+  align-self: flex-end;
+  margin-top: 10px;
+}
+.onePopup p{
+  margin: 7px 0;
+}
+
+#popupContainer button {
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  padding: 5px 10px;
+  margin: 5px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+/*********************************************************/
 /*                        FOOTER                         */
 /*********************************************************/
 footer {
@@ -645,12 +715,11 @@ footer a {
 /*********************************************************/
 /* @media screen and (max-width:750px) { */
 #headerNav {
-  top: 50px;
+  top: var(--header-height);
   width: 100%;
   position: absolute;
   left: 0;
-  /* background-color: var(--main-bg-color2); */
-  background-color: var(--main-bg-color0);
+  background-color: var(--bg-navMenu);
   padding: 5px;
   box-sizing: border-box;
   flex-wrap: wrap;
@@ -662,7 +731,7 @@ footer a {
   display: block;
 }
 
-#headerBurger.diplayOn {
+#headerBurger.displayOn {
   display: flex;
 }
 

@@ -35,7 +35,7 @@
 
     <!--    JS    -->
     <script src="https://cdn.jsdelivr.net/npm/comfy.js@latest/dist/comfy.min.js"></script>
-    <script src="script.min.js"></script>
+    <script src="script.js"></script>
 </head>
 
 <body>
@@ -47,9 +47,9 @@
 
         </div>
         <div id="headerNav">
-            <div id="optionsDiv" hidden>
+            <div id="optionsDiv">
                 <div class="flexRow">
-                    <div class="divSliderButton">
+                    <div class="divSliderButton" hidden>
                         <label for="onlyHighlightedCheck">Only Highlighted</label>
                         <label class="switchButton">
                             <input id="onlyHighlightedCheck" type="checkbox" checked>
@@ -57,7 +57,7 @@
                             <span class="switchLabel">Show only highlighted messages</span>
                         </label>
                     </div>
-                    <div class="divSliderButton">
+                    <div class="divSliderButton" hidden>
                         <label for="highlightedNotifSound">Sound notification</label>
                         <label class="switchButton">
                             <input id="highlightedNotifSound" type="checkbox">
@@ -65,7 +65,7 @@
                             <span class="switchLabel">Sound notification for highlighted messages</span>
                         </label>
                     </div>
-                    <div class="divSliderButton">
+                    <div class="divSliderButton" hidden>
                         <label for="enableModCommand">Moderator command</label>
                         <label class="switchButton">
                             <input id="enableModCommand" type="checkbox" checked>
@@ -92,11 +92,12 @@
                             <span class="checkmark"></span>
                         </label>
                     </div>
-                    <button id="backToHomeButton" class="buttonStyle ">Back Home</button>
+                    <button id="clearCacheButton" class="buttonStyle warningButton" title="WARNING, this will delete all recorded messages" hidden>⚠ Clear cache</button>
+                    <button id="backToHomeButton" class="buttonStyle" hidden>Back Home</button>
                 </div>
             </div>
         </div>
-        <div id="headerBurger" title="Toggle menu">
+        <div id="headerBurger" title="Toggle menu" class="displayOn">
             <div></div>
             <div></div>
             <div></div>
@@ -140,9 +141,22 @@
             </div>
         </div>
         <div id="notifContainer"> </div>
+        <div id="popupDivContainer" hidden>
+            <div id="popupContainer">
+                <!--  -->
+                <div class="onePopup" id="clearCachePopup">
+                    <p>Are you sure you want to clear the cache?</p>
+                    <p>This deletes all saved messages and data.</p>
+                    <div><button class="warningButton" id="clearCachePopupDelete">Yes, delete</button><button id="clearCachePopupCancel">Cancel</button></div>
+                </div>
+                <!--  -->
+            </div>
+        </div>
+
+        </div>
     </main>
     <footer>
-        <a href="https://github.com/quentinperou/Twitch-HighlightedChat-lite" target="_blank" rel="noreferrer">lite-v2</a>
+        <a href="https://github.com/quentinperou/Twitch-HighlightedChat-lite" target="_blank" rel="noreferrer">lite-v2.1</a>
         <!-- <p>Copyright © 2021 QuentinPerou. All Rights Reserved.</p> -->
     </footer>
 
