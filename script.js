@@ -11,21 +11,20 @@
     /*                 DECLATATION VARIABLES                 */
     /*********************************************************/
     let channelInUrl;
-    let storagePrefix = 'HgltCt-';
+    const storagePrefix = 'HgltCt-';
     let onlyHighlighted = true;
     let scollBottom = true;
     let highlightedNotifSound = false;
     let messagesSave = true;
     let deleteOldMessages = true;
     let enableModCommand = true;
-    // let linkIsClickable = true;
     // let mentionIsColorised = false;
 
     /*********************************************************/
     /*                   FONCTION PRINCIPALE                 */
     /*********************************************************/
     function initialiser() {
-        console.log("%cHello ! Enjoy Highlighted Chat 😃\n 🌸🌸🌸🌸🌸", "background: #222; color: #FFF; font-size: 20px;");
+        console.log("%cHello ! Enjoy 😃\n 🌸🌸🌸🌸🌸", "background: #222; color: #FFF; font-size: 20px;");
 
         document.getElementById('notCoChannelInputSubmit').addEventListener('click', function () {
             if (document.getElementById('notCoChannelInput').value)
@@ -71,12 +70,6 @@
             else
                 enableModCommand = false;
         });
-        // document.getElementById("linkIsClickable").addEventListener("input", function () {
-        //     if (document.getElementById("linkIsClickable").checked)
-        //         linkIsClickable = true;
-        //     else
-        //         linkIsClickable = false;
-        // });
 
         if (localStorage.getItem(`${storagePrefix}theme`) != undefined) {
             document.querySelector(`#choiceTheme input[value="${localStorage.getItem(`${storagePrefix}theme`)}"]`).checked = true;
@@ -94,7 +87,7 @@
             });
         });
         function changeTheme(theme) {
-            if (theme == "original") {
+            if (theme == "blue") {
                 document.documentElement.classList.remove("styleDarkTheme");
                 document.documentElement.classList.add("styleOriginalTheme");
             } if (theme == "dark") {
@@ -106,7 +99,6 @@
             document.getElementById('headerBurger').classList.remove('menuVisible');
             document.getElementById('headerNav').classList.remove('menuVisible');
         });
-
 
         document.getElementById('clearCacheButton').addEventListener('click', function () {
             show('#popupDivContainer');
@@ -183,6 +175,9 @@
                                 else
                                     addMessage(el.user, el.message, el.flags, el.self, el.extra, true, new Date(el.date));
                             });
+                            let separationLine = document.createElement('span');
+                            separationLine.style = 'display: block; height: 1px; background-color: #fff; margin: 2px 0;';
+                            document.getElementById('hightlitedMessageChatContainer').appendChild(separationLine);
                         }
                     }
                 }
@@ -238,9 +233,9 @@
             }
         }, { passive: true });
 
-        let updateMsg = addMessage("► System ◄", "(22/01/2022) UPDATE ! Now you can change the color theme ! Go to menu ;) ", {}, false, {});
-        updateMsg.parentElement.style.backgroundColor = "var(--bg-adminMsg)";
-        updateMsg.parentElement.addEventListener('click', function () { this.remove(); });
+        // let updateMsg = addMessage("► System ◄", "(25/01/2022) UPDATE ! You can now change the color theme ! Go to menu ;) ", {}, false, {});
+        // updateMsg.parentElement.style.backgroundColor = "var(--bg-adminMsg)";
+        // updateMsg.parentElement.addEventListener('click', function () { this.remove(); });
 
     } //************* END FONCTION PRINCIPALE **************/
     //*********************************************************************************/
@@ -291,8 +286,6 @@
             date = new Date();
             dateUndefined = true;
         }
-        // console.log(extra);
-        // console.log(flags);
         // console.log(user, message, flags, self, extra, isArchive);
         let thisMsgId = extra.id;
         let leMessage = message.toString();
@@ -330,17 +323,16 @@
             newMessageName.prepend(newMessageTime);
             if(isArchive){
                 let newMessageDate = document.createElement('span');
-                newMessageDate.classList.add("chat-messageTime");
+                newMessageDate.classList.add("chat-messageDate");
                 newMessageDate.textContent = `${((messageDate.getDate() + 1) < 10 ? '0' : '') + (messageDate.getDate())}/${((messageDate.getMonth() + 1) < 10 ? '0' : '') + (messageDate.getMonth() + 1)}/${messageDate.getFullYear()} - `;
-                newMessageTime.prepend(newMessageDate);
+                newMessageName.insertBefore(newMessageDate, newMessageTime);
                 newMessageDiv.setAttribute("data-archive", true);
             }
         }
 
         let messageSeparator = document.createElement('span');
         messageSeparator.classList.add("chat-messageSeparator");
-        messageSeparator.textContent = ": ";
-        // newMessageDiv.appendChild(messageSeparator);
+        messageSeparator.textContent = ":";
         newMessageName.appendChild(messageSeparator);
 
         let messageContent = document.createElement('span');
@@ -376,11 +368,7 @@
             }
         } else
             newMessageDiv.setAttribute("data-type", "normal");
-        // messageContent.textContent = leMessage;
-        let messageFragment = document.createElement('span');
-        messageFragment.classList.add("messageFragment");
-        messageFragment.textContent = leMessage;
-        messageContent.appendChild(messageFragment);
+        messageContent.textContent = leMessage;
         newMessageDiv.appendChild(messageContent);
 
         document.getElementById('hightlitedMessageChatContainer').appendChild(newMessageDiv);
@@ -392,19 +380,14 @@
 
         ////// EMOTES
         let emoteInMessage = extra.messageEmotes;
-        // console.log(emoteInMessage);
         if (emoteInMessage != null) {
             let emotesName = [];
-            let messageTexte = messageFragment.textContent;
-            // console.log(messageTexte);
-            // messageFragment.remove();
+            let messageTexte = messageContent.textContent;
             let messageWithEmote = messageTexte;
             for (const [key, value] of Object.entries(emoteInMessage)) {
                 for (const [key2, value2] of Object.entries(value)) {
                     let emotePosition = value2.split('-');
-                    // console.log("emotePosition:", value2);
                     let emoteName = messageTexte.substring(emotePosition[0], parseInt(emotePosition[1], 10) + 1);
-
                     if (!(emotesName.some(elem => elem === emoteName))) {
                         emotesName.push(emoteName);
                         messageWithEmote = messageWithEmote.replaceAll(emoteName, `</span><img alt="${emoteName}" title="${emoteName}" class="chat-messageEmote" src="https://static-cdn.jtvnw.net/emoticons/v1/${key}/1.0"><span class="messageFragment">`);
@@ -415,15 +398,6 @@
             messageContent.classList.add('chat-message-withEmote');
         }
 
-        ////// Links in message
-        // if (linkIsClickable) {
-        //     let messageLink = messageContent.innerHTML;
-        //     var exp_match = / (\b(https?|):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-        //     messageLink = messageLink.replace(exp_match, ' <a target="_blank" href="$1">$1</a> ');
-        //     var new_exp_match = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
-        //     messageLink = messageLink.replace(new_exp_match, '$1<a target="_blank" href="http://$2">$2</a>');
-        //     messageContent.innerHTML = messageLink;
-        // }
         // if (mentionIsColorised) {
         //     let messageMention = messageContent.innerHTML;
         //     let mentionMatch = /(@[a-zA-Z0-9]+)/gim;

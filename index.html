@@ -35,7 +35,7 @@
 
     <!--    JS    -->
     <script src="https://cdn.jsdelivr.net/npm/comfy.js@latest/dist/comfy.min.js"></script>
-    <script src="script.js"></script>
+    <script src="script.min.js"></script>
 </head>
 
 <body>
@@ -73,22 +73,14 @@
                             <span class="switchLabel">Enable moderator command "!+hmsg"</span>
                         </label>
                     </div>
-                    <!-- <div>
-                        <label for="linkIsClickable">Clickable link</label>
-                        <label class="switchButton">
-                            <input id="linkIsClickable" type="checkbox" checked>
-                            <span class="slider round linkIsClickable"></span>
-                            <span class="switchLabel">Make chat links clickable</span>
-                        </label>
-                    </div> -->
                     <div id="choiceTheme">
                         <span class="theme-title" for="theme">Theme : </span>
                         <label for="theme-dark" class="container">Dark
                             <input id="theme-dark" type="radio" name="theme" value="dark" checked>
                             <span class="checkmark"></span>
                         </label>
-                        <label for="theme-original" class="container">Original
-                            <input id="theme-original" type="radio" name="theme" value="original">
+                        <label for="theme-original" class="container">Blue
+                            <input id="theme-original" type="radio" name="theme" value="blue">
                             <span class="checkmark"></span>
                         </label>
                     </div>
@@ -120,7 +112,6 @@
                         <input type="text" placeholder="EnterChannelName" title="Enter channel name here" id="notCoChannelInput" class="inputStyle" onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9_]/, '')">
                         <input type="submit" value="GO" class="buttonStyle" id="notCoChannelInputSubmit" translate="no">
                     </div>
-                    <!-- <a href="https://quentinperou.dyjix.fr/highlightedChat" style="color: var(--main-text-color2); margin-top: 30px;">New! Full version (beta)</a> -->
                 </div>
             </div>
             <div class="mainDiv divConnect" hidden>
@@ -157,7 +148,7 @@
     </main>
     <footer>
         <a href="https://github.com/quentinperou/Twitch-HighlightedChat-lite" target="_blank" rel="noreferrer">lite-v2.1</a>
-        <!-- <p>Copyright © 2021 QuentinPerou. All Rights Reserved.</p> -->
+        <!-- <p>Copyright © 2022 QuentinPerou. All Rights Reserved.</p> -->
     </footer>
 
 </body>
