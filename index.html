@@ -1,4 +1,4 @@
-<html lang="en">
+<html lang="en" class="styleDarkTheme">
 <!-- Project by QuentinPerou (twitch.tv/quentinperou) -->
 <!-- This page is the simplified version of my bot and tools project for Twitch streamers. -->
 <!-- Find code on GitHub : https://github.com/quentinperou/Twitch-HighlightedChat-lite -->
@@ -36,18 +36,17 @@
     <!--    JS    -->
     <script src="https://cdn.jsdelivr.net/npm/comfy.js@latest/dist/comfy.min.js"></script>
     <script src="script.min.js"></script>
-    
 </head>
 
 <body>
     <header class="flexRowBetween">
         <div>
-            <p>Dev by <a href="https://twitch.tv/quentinperou" target="_blank">QuentinPerou</a> (FR) </p>
+            <p>Dev by <a href="https://twitch.tv/quentinperou" target="_blank" rel="noreferrer">QuentinPerou</a> (FR) </p>
         </div>
         <div id="headerNav">
-            <div id="optionsDiv" hidden>
+            <div id="optionsDiv">
                 <div class="flexRow">
-                    <div>
+                    <div class="divSliderButton" hidden>
                         <label for="onlyHighlightedCheck">Only Highlighted</label>
                         <label class="switchButton">
                             <input id="onlyHighlightedCheck" type="checkbox" checked>
@@ -55,7 +54,7 @@
                             <span class="switchLabel">Show only highlighted messages</span>
                         </label>
                     </div>
-                    <div>
+                    <div class="divSliderButton" hidden>
                         <label for="highlightedNotifSound">Sound notification</label>
                         <label class="switchButton">
                             <input id="highlightedNotifSound" type="checkbox">
@@ -63,11 +62,31 @@
                             <span class="switchLabel">Sound notification for highlighted messages</span>
                         </label>
                     </div>
-                    <button id="backToHomeButton" class="buttonStyle ">Back Home</button>
+                    <div class="divSliderButton" hidden>
+                        <label for="enableModCommand">Moderator command</label>
+                        <label class="switchButton">
+                            <input id="enableModCommand" type="checkbox" checked>
+                            <span class="slider round enableModCommand"></span>
+                            <span class="switchLabel">Enable moderator command "!+hmsg"</span>
+                        </label>
+                    </div>
+                    <div id="choiceTheme">
+                        <span class="theme-title" for="theme">Theme : </span>
+                        <label for="theme-dark" class="container">Dark
+                            <input id="theme-dark" type="radio" name="theme" value="dark" checked>
+                            <span class="checkmark"></span>
+                        </label>
+                        <label for="theme-original" class="container">Blue
+                            <input id="theme-original" type="radio" name="theme" value="blue">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <button id="clearCacheButton" class="buttonStyle warningButton" title="WARNING, this will delete all recorded messages" hidden>⚠ Clear cache</button>
+                    <button id="backToHomeButton" class="buttonStyle" hidden>Back Home</button>
                 </div>
             </div>
         </div>
-        <div id="headerBurger" title="Toggle menu">
+        <div id="headerBurger" title="Toggle menu" class="displayOn">
             <div></div>
             <div></div>
             <div></div>
@@ -87,18 +106,16 @@
                     <p style="margin-top: 0;">Press "GO" and keep this window open. </p>
                     <p style="line-height: 1.5;"><span style="background-color: var(--main-bg-color1); padding: 2px 5px; border-radius: 5px;">Moderators</span> can use command "<span style="background-color: var(--main-bg-color1); padding: 4px 7px; border-radius: 5px; white-space: nowrap;" translate="no">!+hmsg &lt;MESSAGE&gt;</span>" to push their message on website.</p>
                     <div style="margin: 30px 0 20px 0;">
-                        <input type="text" placeholder="EnterChannelName" title="Enter channel name here"
-                            id="notCoChannelInput" class="inputStyle"
-                            onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9_]/, '')">
+                        <input type="text" placeholder="EnterChannelName" title="Enter channel name here" id="notCoChannelInput" class="inputStyle" onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9_]/, '')">
                         <input type="submit" value="GO" class="buttonStyle" id="notCoChannelInputSubmit" translate="no">
                     </div>
-                    <!-- <a href="https://quentinperou.dyjix.fr/highlightedChat" style="color: var(--main-text-color2); margin-top: 30px;">New! Full version (beta)</a> -->
                 </div>
             </div>
             <div class="mainDiv divConnect" hidden>
                 <div id="hightlitedMessageChat">
                     <div class="titleChat">
-                        <p>Highlighted Chat</p>
+                        <!-- <img id="channelProfilePicture" src="" alt="profile picture"> -->
+                        <p></p>
                     </div>
                     <div class="chatMainContainer">
                         <div id="hightlitedMessageChatContainer" class="chatContainer">
@@ -112,10 +129,25 @@
             </div>
         </div>
         <div id="notifContainer"> </div>
+        <div id="popupDivContainer" hidden>
+            <div id="popupContainer">
+                <!--  -->
+                <div class="onePopup" id="clearCachePopup">
+                    <p>Are you sure you want to clear the cache?</p>
+                    <p>This deletes all saved messages and data.</p>
+                    <div><button class="warningButton" id="clearCachePopupDelete">Yes, delete</button><button id="clearCachePopupCancel">Cancel</button></div>
+                </div>
+                <!--  -->
+            </div>
+        </div>
+
+        </div>
     </main>
     <footer>
-        <a href="https://github.com/quentinperou/Twitch-HighlightedChat-lite" target="_blank">lite-v1.3</a>
+        <a href="https://github.com/quentinperou/Twitch-HighlightedChat-lite" target="_blank" rel="noreferrer">lite-v2.1</a>
+        <!-- <p>Copyright © 2022 QuentinPerou. All Rights Reserved.</p> -->
     </footer>
 
 </body>
+
 </html>

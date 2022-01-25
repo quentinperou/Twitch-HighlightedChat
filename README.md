@@ -4,7 +4,7 @@
 
 A tool for Twitch streamers. This web page allows you to display only the highlighted messages of your Twitch chat.
 
-<!-- ➜ https://highlightedchat-lite.quentinperou.fr   -->
+<!-- ➜ https://highlightedchat.quentinperou.fr   -->
 ➜ https://highlightedchat-lite.netlify.app  
 
 <br>
@@ -34,8 +34,8 @@ This projetc use:
 
 ***
 ## Developer
-- [QuentinPerou](https://github.com/quentinperou) ► Twitch : https://twitch.tv/quentinperou
+- [QuentinPerou](https://github.com/quentinperou) ▶ Twitch : https://twitch.tv/quentinperou
 
 
 
-<!--  lite-v1.3  -->
+<!--  lite-v2.1  -->
