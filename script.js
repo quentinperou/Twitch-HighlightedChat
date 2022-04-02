@@ -2,7 +2,7 @@
 /*** Twitch Highlighted Chat - lite ***/
 /*** By QuentinPerou ***/
 
-/*  lite-v2.1  */
+/*  lite-v2.2  */
 
 (function () {
     document.addEventListener("DOMContentLoaded", initialiser);
@@ -107,6 +107,8 @@
             sessionStorage.clear();
             localStorage.clear();
             hide('#popupDivContainer');
+            document.getElementById('headerBurger').classList.remove('menuVisible');
+            document.getElementById('headerNav').classList.remove('menuVisible');
             displayNotif('Cache clear !');
         });
         document.getElementById('clearCachePopupCancel').addEventListener('click', function () {
@@ -169,12 +171,22 @@
                     if (messagesSave) {
                         if (localStorage.getItem(`${storagePrefix}messagesSave-${channelInUrl}`) != undefined) {
                             let savedElem = JSON.parse(localStorage.getItem(`${storagePrefix}messagesSave-${channelInUrl}`));
+                            let savedElemClean = [];
                             savedElem.forEach(function (el) {
+                                //delete el.date if date il older than 5 day
+                                let date = new Date(el.date);
+                                let now = new Date();
+                                if (now.getTime() - date.getTime() > 1000 * 60 * 60 * 24 * 5) {
+                                    console.log("delete elements older than 5 day");
+                                }
+                                else savedElemClean.push(el);
+
                                 if (el.isRead)
                                     addMessage(el.user, el.message, el.flags, el.self, el.extra, true, new Date(el.date)).setAttribute('read', '');
                                 else
                                     addMessage(el.user, el.message, el.flags, el.self, el.extra, true, new Date(el.date));
                             });
+                            localStorage.setItem(`${storagePrefix}messagesSave-${channelInUrl}`, JSON.stringify(savedElemClean)); //clean localStorage
                             let separationLine = document.createElement('span');
                             separationLine.style = 'display: block; height: 1px; background-color: #fff; margin: 2px 0;';
                             document.getElementById('hightlitedMessageChatContainer').appendChild(separationLine);
@@ -321,7 +333,7 @@
             newMessageTime.classList.add("chat-messageTime");
             newMessageTime.textContent = `${messagHours}:${messagMinutes}`;
             newMessageName.prepend(newMessageTime);
-            if(isArchive){
+            if (isArchive) {
                 let newMessageDate = document.createElement('span');
                 newMessageDate.classList.add("chat-messageDate");
                 newMessageDate.textContent = `${((messageDate.getDate() + 1) < 10 ? '0' : '') + (messageDate.getDate())}/${((messageDate.getMonth() + 1) < 10 ? '0' : '') + (messageDate.getMonth() + 1)}/${messageDate.getFullYear()} - `;

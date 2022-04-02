@@ -15,13 +15,19 @@ _Made by [QuentinPerou](https://twitch.tv/quentinperou)_
 Host on Netlify.  
 [![Netlify Status](https://api.netlify.com/api/v1/badges/f6529eb4-9a06-45b5-a860-8c6c962c71fb/deploy-status)](https://app.netlify.com/sites/highlightedchat-lite/deploys)
 
+<div align="center">
+  <img src="preview.png" style="max-height:350px">
+</div>
+
 ***
 
 ## Features
 - Show all chat messages
 - Show only highlighted messages
 - Sound notification for highlighted messages
+- Click on a highlighted message to mark it as read
 - Moderators can push their message on website with command "`!+hmsg <MESSAGE>`"
+- Stores messages in memory for 5 days
 
 ## Changelog
 To see the list of recent changes, see [Releases section](https://github.com/quentinperou/Twitch-HighlightedChat-lite/releases).  
@@ -36,6 +42,6 @@ This projetc use:
 ## Developer
 - [QuentinPerou](https://github.com/quentinperou) ▶ Twitch : https://twitch.tv/quentinperou
 
+<br>
 
-
-<!--  lite-v2.1  -->
+*Version : lite-v2.2*
