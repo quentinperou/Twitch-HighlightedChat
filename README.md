@@ -16,7 +16,7 @@ Host on Netlify.
 [![Netlify Status](https://api.netlify.com/api/v1/badges/f6529eb4-9a06-45b5-a860-8c6c962c71fb/deploy-status)](https://app.netlify.com/sites/highlightedchat-lite/deploys)
 
 <!-- <div align="center">
-  <img src="preview.png" style="max-height:350px">
+  <img src="preview.png" style="width:60%">
 </div> -->
 
 ***
