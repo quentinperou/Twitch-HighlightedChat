@@ -298,7 +298,7 @@
             date = new Date();
             dateUndefined = true;
         }
-        // console.log(user, message, flags, self, extra, isArchive);
+        console.log(user, message, flags, self, extra, isArchive);
         let thisMsgId = extra.id;
         let leMessage = message.toString();
 
@@ -326,7 +326,7 @@
         newMessageName.innerHTML = `${flags.mod ? '<img src="img/mod.png" title="Moderator" class="chat-lineBadge">' : ''}
                                     ${flags.vip ? '<img src="img/vip.png" title="VIP" class="chat-lineBadge">' : ''}
                                     ${flags.broadcaster ? '<img src="img/broadcaster.png" title="Broadcaster" class="chat-lineBadge">' : ''}
-                                    ${flags.subscriber ? `<img src="img/sub.png" title="${extra.userState['badge-info'].match(/[0-9]+$/g)}-Month Subscriber ${badgeInfos}" class="chat-lineBadge">` : ''}
+                                    ${flags.subscriber ? `<img src="img/sub.png" title="${extra.userState['badge-info'].subscriber.match(/[0-9]+$/g)}-Month Subscriber ${badgeInfos}" class="chat-lineBadge">` : ''}
                                     <span class="chat-lineName" translate="no">${user}</span>`;
         if (!isArchive || !dateUndefined) {
             let newMessageTime = document.createElement('span');
