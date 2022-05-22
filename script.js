@@ -298,7 +298,7 @@
             date = new Date();
             dateUndefined = true;
         }
-        console.log(user, message, flags, self, extra, isArchive);
+        // console.log(user, message, flags, self, extra, isArchive);
         let thisMsgId = extra.id;
         let leMessage = message.toString();
 
