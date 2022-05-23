@@ -28,6 +28,9 @@ Host on Netlify.
 - Click on a highlighted message to mark it as read
 - Moderators can push their message on website with command "`!+hmsg <MESSAGE>`"
 - Stores messages in memory for 5 days
+- Colorize mention
+- Display animated emotes
+- Hide messages deleted by moderators
 
 ## Changelog
 To see the list of recent changes, see [Releases section](https://github.com/quentinperou/Twitch-HighlightedChat-lite/releases).  
@@ -44,4 +47,4 @@ This projetc use:
 
 <br>
 
-*Version : lite-v2.2*
+*Version : lite-v2.3*

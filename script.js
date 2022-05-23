@@ -2,7 +2,7 @@
 /*** Twitch Highlighted Chat - lite ***/
 /*** By QuentinPerou ***/
 
-/*  lite-v2.2  */
+/*  lite-v2.3  */
 
 (function () {
     document.addEventListener("DOMContentLoaded", initialiser);
@@ -18,7 +18,7 @@
     let messagesSave = true;
     let deleteOldMessages = true;
     let enableModCommand = true;
-    // let mentionIsColorised = false;
+    let mentionIsColorised = false;
 
     /*********************************************************/
     /*                   FONCTION PRINCIPALE                 */
@@ -69,6 +69,25 @@
                 enableModCommand = true;
             else
                 enableModCommand = false;
+        });
+
+        if (sessionStorage.getItem(`${storagePrefix}mentionIsColorised`) != undefined) {
+            document.getElementById("mentionIsColorised").checked = JSON.parse(sessionStorage.getItem(`${storagePrefix}mentionIsColorised`));
+            mentionIsColorised = JSON.parse(sessionStorage.getItem(`${storagePrefix}mentionIsColorised`));
+        }
+        document.getElementById("mentionIsColorised").addEventListener("input", function () {
+            if (document.getElementById("mentionIsColorised").checked) {
+                mentionIsColorised = true;
+                document.querySelectorAll('.chat-messageMention').forEach(function (element) {
+                    element.classList.remove('off')
+                });
+            } else {
+                mentionIsColorised = false;
+                document.querySelectorAll('.chat-messageMention').forEach(function (element) {
+                    element.classList.add('off')
+                });
+            }
+            sessionStorage.setItem(`${storagePrefix}mentionIsColorised`, mentionIsColorised);
         });
 
         if (localStorage.getItem(`${storagePrefix}theme`) != undefined) {
@@ -129,9 +148,9 @@
 
         /***************************/
 
-        console.log(location.search.substr(1));
-        if (location.search.substr(1).split('=')[0] == "channel") {
-            channelInUrl = location.search.substr(1).split('=')[1].toLowerCase();
+        console.log(location.search.substring(1));
+        if (location.search.substring(1).split('=')[0] == "channel") {
+            channelInUrl = location.search.substring(1).split('=')[1].toLowerCase();
             if (channelInUrl) {
                 ComfyJS.Init(channelInUrl);
 
@@ -166,7 +185,7 @@
                 displayConnectInterface();
 
                 ComfyJS.onConnected = (address, port, isFirstConnect) => {
-                    displayNotif(`Connected to <i>${channelInUrl.toUpperCase()}</i> 's chat`);
+                    displayNotif(`Connected !`);
                     ///// restore saved messages /////
                     if (messagesSave) {
                         if (localStorage.getItem(`${storagePrefix}messagesSave-${channelInUrl}`) != undefined) {
@@ -224,6 +243,10 @@
                         addMessage(user, '!' + command + ' ' + message, flags, false, extra);
                     }
                 }
+                ComfyJS.onMessageDeleted =( id, extra ) => {
+                    console.log("message-delete: ", id, extra); /////// DEBUG ///////
+                    document.getElementById(id).remove();
+                }
                 ComfyJS.onError = (error) => {
                     console.log(error);
                 }
@@ -244,10 +267,6 @@
                 }
             }
         }, { passive: true });
-
-        // let updateMsg = addMessage("► System ◄", "(25/01/2022) UPDATE ! You can now change the color theme ! Go to menu ;) ", {}, false, {});
-        // updateMsg.parentElement.style.backgroundColor = "var(--bg-adminMsg)";
-        // updateMsg.parentElement.addEventListener('click', function () { this.remove(); });
 
     } //************* END FONCTION PRINCIPALE **************/
     //*********************************************************************************/
@@ -298,7 +317,7 @@
             date = new Date();
             dateUndefined = true;
         }
-        // console.log(user, message, flags, self, extra, isArchive);
+        // console.log(user, message, flags, self, extra, isArchive); ///////// DEBUG /////////
         let thisMsgId = extra.id;
         let leMessage = message.toString();
 
@@ -319,6 +338,7 @@
         //////// Create message div ////////
         let newMessageDiv = document.createElement('div');
         newMessageDiv.classList.add("chat-lineMessage");
+        newMessageDiv.id = thisMsgId;
 
         let newMessageName = document.createElement('div');
         newMessageName.classList.add("chat-lineNameDiv");
@@ -402,7 +422,7 @@
                     let emoteName = messageTexte.substring(emotePosition[0], parseInt(emotePosition[1], 10) + 1);
                     if (!(emotesName.some(elem => elem === emoteName))) {
                         emotesName.push(emoteName);
-                        messageWithEmote = messageWithEmote.replaceAll(emoteName, `</span><img alt="${emoteName}" title="${emoteName}" class="chat-messageEmote" src="https://static-cdn.jtvnw.net/emoticons/v1/${key}/1.0"><span class="messageFragment">`);
+                        messageWithEmote = messageWithEmote.replaceAll(emoteName, `</span><img alt="${emoteName}" title="${emoteName}" class="chat-messageEmote" src="https://static-cdn.jtvnw.net/emoticons/v2/${key}/default/dark/1.0"><span class="messageFragment">`);
                     }
                 }
             }
@@ -410,13 +430,11 @@
             messageContent.classList.add('chat-message-withEmote');
         }
 
-        // if (mentionIsColorised) {
-        //     let messageMention = messageContent.innerHTML;
-        //     let mentionMatch = /(@[a-zA-Z0-9]+)/gim;
-        //     console.log(mentionMatch);
-        //     messageMention = messageMention.replace(mentionMatch, '<span class="chat-messageMention">$1</span>');
-        //     messageContent.innerHTML = messageMention;
-        // }
+        ////// detect mentions
+        let messageMention = messageContent.innerHTML;
+        let mentionMatch = /(@[a-zA-Z0-9_]+)/gim;
+        messageMention = messageMention.replace(mentionMatch, `<span class="chat-messageMention ${mentionIsColorised ? '' : 'off'}">$1</span>`);
+        messageContent.innerHTML = messageMention;
 
         ///// Delete old message 
         if (deleteOldMessages && scollBottom) {

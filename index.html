@@ -41,7 +41,8 @@
 <body>
     <header class="flexRowBetween">
         <div>
-            <p>Dev by <a href="https://twitch.tv/quentinperou" target="_blank" rel="noreferrer">QuentinPerou</a> (FR) </p>
+            <p>Twitch Highlighted Chat</p>
+            <!-- <p>Dev with &#10084; by <a href="https://twitch.tv/quentinperou" target="_blank" rel="noreferrer">QuentinPerou</a> (FR) </p> -->
         </div>
         <div id="headerNav">
             <div id="optionsDiv">
@@ -51,7 +52,7 @@
                         <label class="switchButton">
                             <input id="onlyHighlightedCheck" type="checkbox" checked>
                             <span class="slider round onlyHighlightedCheck"></span>
-                            <span class="switchLabel">Show only highlighted messages</span>
+                            <!-- <span class="switchLabel">Show only highlighted messages</span> -->
                         </label>
                     </div>
                     <div class="divSliderButton" hidden>
@@ -70,6 +71,13 @@
                             <span class="switchLabel">Enable moderator command "!+hmsg"</span>
                         </label>
                     </div>
+                    <div class="divSliderButton" hidden>
+                        <label for="mentionIsColorised">Colorise @mention</label>
+                        <label class="switchButton">
+                            <input id="mentionIsColorised" type="checkbox">
+                            <span class="slider round mentionIsColorised"></span>
+                        </label>
+                    </div>
                     <div id="choiceTheme">
                         <span class="theme-title" for="theme">Theme : </span>
                         <label for="theme-dark" class="container">Dark
@@ -84,6 +92,10 @@
                     <button id="clearCacheButton" class="buttonStyle warningButton" title="WARNING, this will delete all recorded messages" hidden>⚠ Clear cache</button>
                     <button id="backToHomeButton" class="buttonStyle" hidden>Back Home</button>
                 </div>
+            </div>
+            <div>
+                <p>Dev with &#10084; by <a href="https://twitch.tv/quentinperou" target="_blank" rel="noreferrer" title="I'm not a graphic designer ^^">QuentinPerou</a> (FR) </p>
+                <p>Version: <a href="https://github.com/quentinperou/Twitch-HighlightedChat-lite" target="_blank" rel="noreferrer">lite-v2.3</a></p>
             </div>
         </div>
         <div id="headerBurger" title="Toggle menu" class="displayOn">
@@ -143,11 +155,5 @@
 
         </div>
     </main>
-    <footer>
-        <a href="https://github.com/quentinperou/Twitch-HighlightedChat-lite" target="_blank" rel="noreferrer">lite-v2.2</a>
-        <!-- <p>Copyright © 2022 QuentinPerou. All Rights Reserved.</p> -->
-    </footer>
-
 </body>
-
 </html>
