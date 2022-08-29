@@ -243,9 +243,16 @@
                         addMessage(user, '!' + command + ' ' + message, flags, false, extra);
                     }
                 }
-                ComfyJS.onMessageDeleted =( id, extra ) => {
+                ComfyJS.onMessageDeleted = (id, extra) => {
                     console.log("message-delete: ", id, extra); /////// DEBUG ///////
                     document.getElementById(id).remove();
+                }
+                ComfyJS.onSub = (user, message, subTierInfo, extra) => {
+                    console.log("onSub: ", user, message, subTierInfo, extra); /////// DEBUG ///////
+                }
+                ComfyJS.onResub = (user, message, streamMonths, cumulativeMonths, subTierInfo, extra) => {
+                    console.log('onResub: ', user, message, streamMonths, cumulativeMonths, subTierInfo, extra); /////// DEBUG ///////
+                    // addMessage(user, message, {subscriber:true}, false, extra);
                 }
                 ComfyJS.onError = (error) => {
                     console.log(error);
