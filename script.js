@@ -39,10 +39,12 @@
                     document.getElementById('notCoChannelInputSubmit').click();
         });
 
-        document.getElementById('backToHomeButton').addEventListener('click', function () {
-            ComfyJS.Disconnect();
-            window.location.href = "./";
-        }, { passive: true });
+        document.querySelectorAll('#backToHomeButton, .backToHome').forEach(function (elm) {
+            elm.addEventListener('click', function () {
+                ComfyJS.Disconnect();
+                window.location.href = "./";
+            }, { passive: true });
+        });
 
         if (sessionStorage.getItem(`${storagePrefix}onlyHighlightedCheck`) != undefined) {
             document.getElementById("onlyHighlightedCheck").checked = false;
