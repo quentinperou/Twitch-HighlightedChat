@@ -27,7 +27,7 @@ Host on Netlify.
 - Sound notification for highlighted messages
 - Click on a highlighted message to mark it as read
 - Moderators can push their message on website with command "`!+hmsg <MESSAGE>`"
-- Stores messages in memory for 5 days
+- Stores messages in local memory for 5 days
 - Colorize mention
 - Display animated emotes
 - Hide messages deleted by moderators
