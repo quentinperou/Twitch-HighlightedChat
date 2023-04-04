@@ -19,6 +19,7 @@
     let deleteOldMessages = true;
     let enableModCommand = true;
     let mentionIsColorised = false;
+    let nameIsColorized = false;
 
     /*********************************************************/
     /*                   FONCTION PRINCIPALE                 */
@@ -88,6 +89,25 @@
                 });
             }
             sessionStorage.setItem(`${storagePrefix}mentionIsColorised`, mentionIsColorised);
+        });
+
+        if (sessionStorage.getItem(`${storagePrefix}nameIsColorized`) != undefined) {
+            document.getElementById("nameIsColorized").checked = JSON.parse(sessionStorage.getItem(`${storagePrefix}nameIsColorized`));
+            nameIsColorized = JSON.parse(sessionStorage.getItem(`${storagePrefix}nameIsColorized`));
+        }
+        document.getElementById("nameIsColorized").addEventListener("input", function () {
+            if (document.getElementById("nameIsColorized").checked) {
+                nameIsColorized = true;
+                document.querySelectorAll('.chat-lineName').forEach(function (element) {
+                    element.classList.remove('noColor')
+                });
+            } else {
+                nameIsColorized = false;
+                document.querySelectorAll('.chat-lineName').forEach(function (element) {
+                    element.classList.add('noColor')
+                });
+            }
+            sessionStorage.setItem(`${storagePrefix}nameIsColorized`, nameIsColorized);
         });
 
         if (localStorage.getItem(`${storagePrefix}theme`) != undefined) {
@@ -368,6 +388,8 @@
                 newMessageDiv.setAttribute("data-archive", true);
             }
         }
+        if (nameIsColorized == false)
+            newMessageName.querySelector('.chat-lineName').classList.add('noColor');
 
         let messageSeparator = document.createElement('span');
         messageSeparator.classList.add("chat-messageSeparator");

@@ -573,6 +573,9 @@ main {
   font-weight: bold;
   color: var(--main-text-color0);
 }
+.chat-lineName.noColor {
+  color: var(--main-text-color0) !important;
+}
 
 .chat-message {
   color: #fff;
