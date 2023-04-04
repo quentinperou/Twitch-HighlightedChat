@@ -248,7 +248,7 @@
                 }
                 ComfyJS.onCommand = (user, command, message, flags, extra) => {
                     // console.log(user, command, message, flags, extra);
-                    if (enableModCommand && command === "+hmsg" && (flags.broadcaster || flags.mod || user.toLowerCase() == 'quentinperou')) {
+                    if (enableModCommand && command === "hl" && (flags.broadcaster || flags.mod || user.toLowerCase() == 'quentinperou')) {
                         if (!flags.highlighted) {
                             let thisMessage = addMessage(user, message, flags, false, extra, false);
                             thisMessage.style.backgroundColor = "var(--main-bg-color0)";

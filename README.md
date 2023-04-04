@@ -29,7 +29,7 @@ Démo : https://clips.twitch.tv/CallousLightNarwhalTheTarFu-z2WUVBvAXagYm9j1
 - Show only highlighted messages
 - Sound notification for highlighted messages
 - Click on a highlighted message to mark it as read
-- Moderators can push their message on website with command "`!+hmsg <MESSAGE>`"
+- Moderators can push their message on website with command "`!hl <MESSAGE>`"
 - Stores messages in local memory for 5 days
 - Colorize mention
 - Display animated emotes
