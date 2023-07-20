@@ -46,34 +46,53 @@
             }, { passive: true });
         });
 
+        ///////// get/set only hightlight Setting /////////
         if (sessionStorage.getItem(`${storagePrefix}onlyHighlightedCheck`) != undefined) {
-            document.getElementById("onlyHighlightedCheck").checked = false;
-            onlyHighlighted = false;
+            document.getElementById("onlyHighlightedCheck").checked = JSON.parse(sessionStorage.getItem(`${storagePrefix}onlyHighlightedCheck`));
+            onlyHighlighted = JSON.parse(sessionStorage.getItem(`${storagePrefix}onlyHighlightedCheck`));
         }
         document.getElementById("onlyHighlightedCheck").addEventListener("input", function () {
             if (document.getElementById("onlyHighlightedCheck").checked) {
                 onlyHighlighted = true;
                 remove('[data-type="normal"]');
-                sessionStorage.removeItem(`${storagePrefix}onlyHighlightedCheck`);
+                sessionStorage.setItem(`${storagePrefix}onlyHighlightedCheck`, true);
             } else {
                 onlyHighlighted = false;
                 sessionStorage.setItem(`${storagePrefix}onlyHighlightedCheck`, false);
             }
         });
+
+        ///////// get/set Sound Notif Setting /////////
+        if (sessionStorage.getItem(`${storagePrefix}highlightedNotifSound`) != undefined) {
+            document.getElementById("highlightedNotifSound").checked = JSON.parse(sessionStorage.getItem(`${storagePrefix}highlightedNotifSound`));
+            highlightedNotifSound = JSON.parse(sessionStorage.getItem(`${storagePrefix}highlightedNotifSound`));
+        }
         document.getElementById("highlightedNotifSound").addEventListener("input", function () {
             if (document.getElementById("highlightedNotifSound").checked) {
                 highlightedNotifSound = true;
+                sessionStorage.setItem(`${storagePrefix}highlightedNotifSound`, true);
             } else {
                 highlightedNotifSound = false;
+                sessionStorage.setItem(`${storagePrefix}highlightedNotifSound`, false);
             }
         });
+
+        ///////// get/set mod command Setting /////////
+        if (sessionStorage.getItem(`${storagePrefix}enableModCommand`) != undefined) {
+            document.getElementById("enableModCommand").checked = JSON.parse(sessionStorage.getItem(`${storagePrefix}enableModCommand`));
+            enableModCommand = JSON.parse(sessionStorage.getItem(`${storagePrefix}enableModCommand`));
+        }
         document.getElementById("enableModCommand").addEventListener("input", function () {
-            if (document.getElementById("enableModCommand").checked)
+            if (document.getElementById("enableModCommand").checked) {
                 enableModCommand = true;
-            else
+                sessionStorage.setItem(`${storagePrefix}enableModCommand`, true);
+            } else {
                 enableModCommand = false;
+                sessionStorage.setItem(`${storagePrefix}enableModCommand`, false);
+            }
         });
 
+        ///////// get/set colorise mention Setting /////////
         if (sessionStorage.getItem(`${storagePrefix}mentionIsColorised`) != undefined) {
             document.getElementById("mentionIsColorised").checked = JSON.parse(sessionStorage.getItem(`${storagePrefix}mentionIsColorised`));
             mentionIsColorised = JSON.parse(sessionStorage.getItem(`${storagePrefix}mentionIsColorised`));
@@ -93,6 +112,7 @@
             sessionStorage.setItem(`${storagePrefix}mentionIsColorised`, mentionIsColorised);
         });
 
+        ///////// get/set colorise name Setting /////////
         if (sessionStorage.getItem(`${storagePrefix}nameIsColorized`) != undefined) {
             document.getElementById("nameIsColorized").checked = JSON.parse(sessionStorage.getItem(`${storagePrefix}nameIsColorized`));
             nameIsColorized = JSON.parse(sessionStorage.getItem(`${storagePrefix}nameIsColorized`));
@@ -112,6 +132,7 @@
             sessionStorage.setItem(`${storagePrefix}nameIsColorized`, nameIsColorized);
         });
 
+        ///////// get/set Theme Setting /////////
         if (localStorage.getItem(`${storagePrefix}theme`) != undefined) {
             document.querySelector(`#choiceTheme input[value="${localStorage.getItem(`${storagePrefix}theme`)}"]`).checked = true;
             changeTheme(localStorage.getItem(`${storagePrefix}theme`));
@@ -136,6 +157,8 @@
                 document.documentElement.classList.add("styleDarkTheme");
             }
         }
+
+
         document.getElementsByClassName('mainContainer')[0].addEventListener('click', function () {
             document.getElementById('headerBurger').classList.remove('menuVisible');
             document.getElementById('headerNav').classList.remove('menuVisible');
