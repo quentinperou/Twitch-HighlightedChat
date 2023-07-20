@@ -19,7 +19,12 @@ upload_bt.addEventListener('click', function (e) {
             const data = JSON.parse(content);
             console.log(data);
             const channelInUrl = location.search.substring(1).split('&')[0].split('=')[1].toLowerCase();
-            if (localStorage.getItem("HgltCt-messagesSave-" + channelInUrl) != null) {
+
+            //check if channel is the same
+            if (channelInUrl != data[0].extra.channel) {
+                alert("This file is not for this channel");
+                return;
+            } else if (localStorage.getItem("HgltCt-messagesSave-" + channelInUrl) != null) {
                 if (confirm("Are you sure you want to merge with current history?")) {
                     //get curent history and add new data
                     const curentcontent = localStorage.getItem("HgltCt-messagesSave-" + channelInUrl);
@@ -40,3 +45,7 @@ upload_bt.addEventListener('click', function (e) {
     }
     input.click();
 });
+
+////// test version 1 //////
+// const sorted = result.sort((a, b) => a.date - b.date);
+// const unique = sorted.filter((v, i, a) => a.findIndex(t => (t.date === v.date)) === i);
