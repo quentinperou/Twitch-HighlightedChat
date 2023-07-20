@@ -20,14 +20,14 @@ upload_bt.addEventListener('click', function (e) {
             console.log(data);
             const channelInUrl = location.search.substring(1).split('&')[0].split('=')[1].toLowerCase();
             if (localStorage.getItem("HgltCt-messagesSave-" + channelInUrl) != null) {
-                if (confirm("Are you sure you want to overwrite the current history?")) {
+                if (confirm("Are you sure you want to merge with current history?")) {
                     //get curent history and add new data
                     const curentcontent = localStorage.getItem("HgltCt-messagesSave-" + channelInUrl);
                     const curentData = JSON.parse(curentcontent);
                     const result = curentData.concat(data);
-                    //sort by date and remove duplicate
-                    const sorted = result.sort((a, b) => a.date - b.date);
-                    const unique = sorted.filter((v, i, a) => a.findIndex(t => (t.date === v.date)) === i);
+                    //sort by date and remove duplicate, check if message is not empty
+                    const unique = result.filter((thing, index, self) => index === self.findIndex((t) => (t.date === thing.date && t.user === thing.user && t.message === thing.message && t.message != "")));
+                    unique.sort((a, b) => (a.date > b.date) ? 1 : -1);
                     //save
                     localStorage.setItem("HgltCt-messagesSave-" + channelInUrl, JSON.stringify(unique));
                     window.location.reload();
