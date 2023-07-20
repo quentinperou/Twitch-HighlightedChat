@@ -5,7 +5,7 @@
 A tool for Twitch streamers. This web page allows you to display only the highlighted messages of your Twitch chat.
 
 <!-- ➜ https://highlightedchat.quentinperou.fr   -->
-➜ https://highlightedchat.netlify.app  
+➜ https://highlightedchat-lite.netlify.app  
 
 <br>
 
