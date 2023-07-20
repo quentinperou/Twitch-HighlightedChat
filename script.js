@@ -20,7 +20,7 @@
     let enableModCommand = true;
     let mentionIsColorised = false;
     let nameIsColorized = false;
-    const storageDelay = 7; // in day
+    const storageDelay = 700; // in day
 
     /*********************************************************/
     /*                   FONCTION PRINCIPALE                 */
