@@ -1,7 +1,6 @@
 <html lang="en" class="styleDarkTheme">
 <!-- Project by QuentinPerou (twitch.tv/quentinperou) -->
-<!-- This page is the simplified version of my bot and tools project for Twitch streamers. -->
-<!-- Find code on GitHub : https://github.com/quentinperou/Twitch-HighlightedChat-lite -->
+<!-- Find code on GitHub : https://github.com/quentinperou/Twitch-HighlightedChat -->
 <!-- This project was inspired by Ponce (twitch.tv/ponce)🌸 -->
 
 <head>
@@ -17,10 +16,10 @@
     <meta name="twitter:card" content="summary" />
     <!-- <meta name="twitter:site" content="@quentinperou"/> -->
     <meta name="twitter:creator" content="@quentinperou" />
-    <meta property="og:url" content="https://highlightedchat-lite.netlify.app" />
+    <meta property="og:url" content="https://highlightedchat.netlify.app" />
     <meta property="og:title" content="Twitch Highlighted Chat" />
     <meta property="og:description" content="A tool for Twitch streamers. This web page allows you to display only the highlighted messages of your Twitch chat." />
-    <meta property="og:image" content="https://highlightedchat-lite.netlify.app/preview.png">
+    <meta property="og:image" content="https://highlightedchat.netlify.app/preview.png">
     <!-- <meta name="apple-mobile-web-app-title" content="Twitch Highlighted Chat" /> -->
     <meta name="apple-mobile-web-app-status-bar-style" content="#39c0d2" />
     <meta name="msapplication-TileColor" content="#39c0d2">
@@ -41,8 +40,8 @@
 <body>
     <header class="flexRowBetween">
         <div>
-            <p class="backToHome" style="cursor: pointer;" title="Back Home">Twitch Highlighted Chat</p>
-            <!-- <p>Dev with &#10084; by <a href="https://twitch.tv/quentinperou" target="_blank" rel="noreferrer">QuentinPerou</a> (FR) </p> -->
+            <!-- <p class="backToHome" style="cursor: pointer;" title="Back Home">Twitch Highlighted Chat</p> -->
+            <p>Dev with &#10084; by <a href="https://twitch.tv/quentinperou" target="_blank" rel="noreferrer">QuentinPerou</a> (FR) </p>
         </div>
         <div id="headerNav">
             <div id="optionsDiv">
@@ -68,7 +67,7 @@
                         <label class="switchButton">
                             <input id="enableModCommand" type="checkbox" checked>
                             <span class="slider round enableModCommand"></span>
-                            <span class="switchLabel">Enable moderator command "!hl"</span>
+                            <span class="switchLabel">Enable moderator command "!hlt"</span>
                         </label>
                     </div>
                     <div class="divSliderButton" hidden>
@@ -102,7 +101,7 @@
             </div>
             <div>
                 <p>Dev with &#10084; by <a href="https://twitch.tv/quentinperou" target="_blank" rel="noreferrer" title="I'm not a graphic designer ^^">QuentinPerou</a> (FR) </p>
-                <p>Version: <a href="https://github.com/quentinperou/Twitch-HighlightedChat-lite" target="_blank" rel="noreferrer">lite-v2.3</a></p>
+                <p>Version: <a href="https://github.com/quentinperou/Twitch-HighlightedChat" target="_blank" rel="noreferrer">v2.4</a></p>
             </div>
         </div>
         <div id="headerBurger" title="Toggle menu" class="displayOn">
@@ -117,13 +116,13 @@
                 <div class="homeNotCoContainer">
                     <div class="pageTitle">
                         <h1>Twitch Highlighted Chat</h1>
-                        <span style="background-color: var(--main-bg-color1); color: var(--main-text-color2); font-weight: bold; padding: 2px 5px; border-radius: 5px; margin-left: 5px;">-lite</span>
+                        <!-- <span style="background-color: var(--main-bg-color1); color: var(--main-text-color2); font-weight: bold; padding: 2px 5px; border-radius: 5px; margin-left: 5px;">-lite</span> -->
                     </div>
                     <p>This web page allows you to display only the <span style="background-color: var(--main-highlight-color); padding: 2px 5px; border-radius: 5px;">highlighted messages</span> of your Twitch chat.</p>
                     <p style="margin-top: 0;">Build for streamers who are afraid of missing these kinds of messages.</p>
                     <p>Enter below the name of the channel from which you want to isolate the highlighted messages.</p>
                     <p style="margin-top: 0;">Press "GO" and keep this window open. </p>
-                    <p style="line-height: 1.5;"><span style="background-color: var(--main-bg-color1); padding: 2px 5px; border-radius: 5px;">Moderators</span> can use command "<span style="background-color: var(--main-bg-color1); padding: 4px 7px; border-radius: 5px; white-space: nowrap;" translate="no">!hl &lt;MESSAGE&gt;</span>" to push their message on website.</p>
+                    <p style="line-height: 1.5;"><span style="background-color: var(--main-bg-color1); padding: 2px 5px; border-radius: 5px;">Moderators</span> can use command "<span style="background-color: var(--main-bg-color1); padding: 4px 7px; border-radius: 5px; white-space: nowrap;" translate="no">!hlt &lt;MESSAGE&gt;</span>" to push their message on website.</p>
                     <div style="margin: 30px 0 20px 0;">
                         <input type="text" placeholder="EnterChannelName" title="Enter channel name here" id="notCoChannelInput" class="inputStyle" onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9_]/, '')">
                         <input type="submit" value="GO" class="buttonStyle" id="notCoChannelInputSubmit" translate="no">

@@ -1,11 +1,11 @@
-# Twitch-HighlightedChat-lite  
+# Twitch-HighlightedChat  
 
 <!-- This is the **lite** version of the project.   -->
 
 A tool for Twitch streamers. This web page allows you to display only the highlighted messages of your Twitch chat.
 
 <!-- ➜ https://highlightedchat.quentinperou.fr   -->
-➜ https://highlightedchat-lite.netlify.app  
+➜ https://highlightedchat.netlify.app  
 
 <br>
 
@@ -29,15 +29,15 @@ Démo : https://clips.twitch.tv/CallousLightNarwhalTheTarFu-z2WUVBvAXagYm9j1
 - Show only highlighted messages
 - Sound notification for highlighted messages
 - Click on a highlighted message to mark it as read
-- Moderators can push their message on website with command "`!hl <MESSAGE>`"
+- Moderators can push their message on website with command "`!hlt <MESSAGE>`"
 - Stores messages in local memory for 5 days
 - Colorize mention
 - Display animated emotes
 - Hide messages deleted by moderators
 
 ## Changelog
-To see the list of recent changes, see [Releases section](https://github.com/quentinperou/Twitch-HighlightedChat-lite/releases).  
-To see the progress of new features development, see the [Project section](https://github.com/quentinperou/Twitch-HighlightedChat-lite/projects/1).
+To see the list of recent changes, see [Releases section](https://github.com/quentinperou/Twitch-HighlightedChat/releases).  
+To see the progress of new features development, see the [Project section](https://github.com/quentinperou/Twitch-HighlightedChat/projects/1).
 
 ## Resources
 This projetc use:  
@@ -50,4 +50,4 @@ This projetc use:
 
 <br>
 
-*Version : lite-v2.3*
+*Version : v2.4*

@@ -2,7 +2,7 @@
 /*** Twitch Highlighted Chat - lite ***/
 /*** By QuentinPerou ***/
 
-/*  lite-v2.3  */
+/*  v2.4  */
 
 (function () {
     document.addEventListener("DOMContentLoaded", initialiser);
@@ -271,7 +271,7 @@
                 }
                 ComfyJS.onCommand = (user, command, message, flags, extra) => {
                     // console.log(user, command, message, flags, extra);
-                    if (enableModCommand && command === "hl" && (flags.broadcaster || flags.mod || user.toLowerCase() == 'quentinperou')) {
+                    if (enableModCommand && command === "hlt" && (flags.broadcaster || flags.mod || user.toLowerCase() == 'quentinperou')) {  //oui j'ai un privilège mdr
                         if (!flags.highlighted) {
                             let thisMessage = addMessage(user, message, flags, false, extra, false);
                             thisMessage.style.backgroundColor = "var(--main-bg-color0)";
