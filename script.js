@@ -20,6 +20,7 @@
     let enableModCommand = true;
     let mentionIsColorised = false;
     let nameIsColorized = false;
+    const storageDelay = 7; // in day
 
     /*********************************************************/
     /*                   FONCTION PRINCIPALE                 */
@@ -237,11 +238,11 @@
                             let savedElem = JSON.parse(localStorage.getItem(`${storagePrefix}messagesSave-${channelInUrl}`));
                             let savedElemClean = [];
                             savedElem.forEach(function (el) {
-                                //delete el.date if date il older than 5 day
+                                //delete el.date if date is older than X day
                                 let date = new Date(el.date);
                                 let now = new Date();
-                                if (now.getTime() - date.getTime() > 1000 * 60 * 60 * 24 * 5) {
-                                    console.log("delete elements older than 5 day");
+                                if (now.getTime() - date.getTime() > 1000 * 60 * 60 * 24 * storageDelay) {
+                                    console.log("delete elements older than "+storageDelay+" day");
                                 }
                                 else savedElemClean.push(el);
 
