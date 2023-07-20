@@ -194,9 +194,9 @@
 
         /***************************/
 
-        console.log(location.search.substring(1));
-        if (location.search.substring(1).split('=')[0] == "channel") {
-            channelInUrl = location.search.substring(1).split('=')[1].toLowerCase();
+        console.log(location.search.substring(1).split('&')[0]);
+        if (location.search.substring(1).split('&')[0].split('=')[0] == "channel") {
+            channelInUrl = location.search.substring(1).split('&')[0].split('=')[1].toLowerCase();
             if (channelInUrl) {
                 ComfyJS.Init(channelInUrl);
 
