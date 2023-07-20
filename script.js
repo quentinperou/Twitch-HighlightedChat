@@ -2,7 +2,7 @@
 /*** Twitch Highlighted Chat - lite ***/
 /*** By QuentinPerou ***/
 
-/*  v2.4  */
+/*  v2.5  */
 
 (function () {
     document.addEventListener("DOMContentLoaded", initialiser);
@@ -20,7 +20,7 @@
     let enableModCommand = true;
     let mentionIsColorised = false;
     let nameIsColorized = false;
-    const storageDelay = 700; // in day
+    const storageDelay = 7; // in day
 
     /*********************************************************/
     /*                   FONCTION PRINCIPALE                 */
@@ -48,33 +48,33 @@
         });
 
         ///////// get/set only hightlight Setting /////////
-        if (sessionStorage.getItem(`${storagePrefix}onlyHighlightedCheck`) != undefined) {
-            document.getElementById("onlyHighlightedCheck").checked = JSON.parse(sessionStorage.getItem(`${storagePrefix}onlyHighlightedCheck`));
-            onlyHighlighted = JSON.parse(sessionStorage.getItem(`${storagePrefix}onlyHighlightedCheck`));
+        if (localStorage.getItem(`${storagePrefix}onlyHighlightedCheck`) != undefined) {
+            document.getElementById("onlyHighlightedCheck").checked = JSON.parse(localStorage.getItem(`${storagePrefix}onlyHighlightedCheck`));
+            onlyHighlighted = JSON.parse(localStorage.getItem(`${storagePrefix}onlyHighlightedCheck`));
         }
         document.getElementById("onlyHighlightedCheck").addEventListener("input", function () {
             if (document.getElementById("onlyHighlightedCheck").checked) {
                 onlyHighlighted = true;
                 remove('[data-type="normal"]');
-                sessionStorage.setItem(`${storagePrefix}onlyHighlightedCheck`, true);
+                localStorage.setItem(`${storagePrefix}onlyHighlightedCheck`, true);
             } else {
                 onlyHighlighted = false;
-                sessionStorage.setItem(`${storagePrefix}onlyHighlightedCheck`, false);
+                localStorage.setItem(`${storagePrefix}onlyHighlightedCheck`, false);
             }
         });
 
         ///////// get/set Sound Notif Setting /////////
-        if (sessionStorage.getItem(`${storagePrefix}highlightedNotifSound`) != undefined) {
-            document.getElementById("highlightedNotifSound").checked = JSON.parse(sessionStorage.getItem(`${storagePrefix}highlightedNotifSound`));
-            highlightedNotifSound = JSON.parse(sessionStorage.getItem(`${storagePrefix}highlightedNotifSound`));
+        if (localStorage.getItem(`${storagePrefix}highlightedNotifSound`) != undefined) {
+            document.getElementById("highlightedNotifSound").checked = JSON.parse(localStorage.getItem(`${storagePrefix}highlightedNotifSound`));
+            highlightedNotifSound = JSON.parse(localStorage.getItem(`${storagePrefix}highlightedNotifSound`));
         }
         document.getElementById("highlightedNotifSound").addEventListener("input", function () {
             if (document.getElementById("highlightedNotifSound").checked) {
                 highlightedNotifSound = true;
-                sessionStorage.setItem(`${storagePrefix}highlightedNotifSound`, true);
+                localStorage.setItem(`${storagePrefix}highlightedNotifSound`, true);
             } else {
                 highlightedNotifSound = false;
-                sessionStorage.setItem(`${storagePrefix}highlightedNotifSound`, false);
+                localStorage.setItem(`${storagePrefix}highlightedNotifSound`, false);
             }
         });
 
@@ -94,9 +94,9 @@
         });
 
         ///////// get/set colorise mention Setting /////////
-        if (sessionStorage.getItem(`${storagePrefix}mentionIsColorised`) != undefined) {
-            document.getElementById("mentionIsColorised").checked = JSON.parse(sessionStorage.getItem(`${storagePrefix}mentionIsColorised`));
-            mentionIsColorised = JSON.parse(sessionStorage.getItem(`${storagePrefix}mentionIsColorised`));
+        if (localStorage.getItem(`${storagePrefix}mentionIsColorised`) != undefined) {
+            document.getElementById("mentionIsColorised").checked = JSON.parse(localStorage.getItem(`${storagePrefix}mentionIsColorised`));
+            mentionIsColorised = JSON.parse(localStorage.getItem(`${storagePrefix}mentionIsColorised`));
         }
         document.getElementById("mentionIsColorised").addEventListener("input", function () {
             if (document.getElementById("mentionIsColorised").checked) {
@@ -110,13 +110,13 @@
                     element.classList.add('off')
                 });
             }
-            sessionStorage.setItem(`${storagePrefix}mentionIsColorised`, mentionIsColorised);
+            localStorage.setItem(`${storagePrefix}mentionIsColorised`, mentionIsColorised);
         });
 
         ///////// get/set colorise name Setting /////////
-        if (sessionStorage.getItem(`${storagePrefix}nameIsColorized`) != undefined) {
-            document.getElementById("nameIsColorized").checked = JSON.parse(sessionStorage.getItem(`${storagePrefix}nameIsColorized`));
-            nameIsColorized = JSON.parse(sessionStorage.getItem(`${storagePrefix}nameIsColorized`));
+        if (localStorage.getItem(`${storagePrefix}nameIsColorized`) != undefined) {
+            document.getElementById("nameIsColorized").checked = JSON.parse(localStorage.getItem(`${storagePrefix}nameIsColorized`));
+            nameIsColorized = JSON.parse(localStorage.getItem(`${storagePrefix}nameIsColorized`));
         }
         document.getElementById("nameIsColorized").addEventListener("input", function () {
             if (document.getElementById("nameIsColorized").checked) {
@@ -130,7 +130,7 @@
                     element.classList.add('noColor')
                 });
             }
-            sessionStorage.setItem(`${storagePrefix}nameIsColorized`, nameIsColorized);
+            localStorage.setItem(`${storagePrefix}nameIsColorized`, nameIsColorized);
         });
 
         ///////// get/set Theme Setting /////////

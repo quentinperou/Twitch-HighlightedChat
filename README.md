@@ -25,13 +25,13 @@ Démo : https://clips.twitch.tv/CallousLightNarwhalTheTarFu-z2WUVBvAXagYm9j1
 ***
 
 ## Features
-- Show all chat messages
-- Show only highlighted messages
+- Show all chat messages OR Show only highlighted messages
 - Sound notification for highlighted messages
 - Click on a highlighted message to mark it as read
 - Moderators can push their message on website with command "`!hlt <MESSAGE>`"
-- Stores messages in local memory for 5 days
+- Stores messages in local memory for 7 days
 - Colorize mention
+- Show username color
 - Display animated emotes
 - Hide messages deleted by moderators
 
@@ -50,4 +50,4 @@ This projetc use:
 
 <br>
 
-*Version : v2.4*
+*Version : v2.5*
