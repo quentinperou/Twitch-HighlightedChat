@@ -48,18 +48,18 @@
         });
 
         ///////// get/set only hightlight Setting /////////
-        if (localStorage.getItem(`${storagePrefix}onlyHighlightedCheck`) != undefined) {
-            document.getElementById("onlyHighlightedCheck").checked = JSON.parse(localStorage.getItem(`${storagePrefix}onlyHighlightedCheck`));
-            onlyHighlighted = JSON.parse(localStorage.getItem(`${storagePrefix}onlyHighlightedCheck`));
+        if (sessionStorage.getItem(`${storagePrefix}onlyHighlightedCheck`) != undefined) {
+            document.getElementById("onlyHighlightedCheck").checked = JSON.parse(sessionStorage.getItem(`${storagePrefix}onlyHighlightedCheck`));
+            onlyHighlighted = JSON.parse(sessionStorage.getItem(`${storagePrefix}onlyHighlightedCheck`));
         }
         document.getElementById("onlyHighlightedCheck").addEventListener("input", function () {
             if (document.getElementById("onlyHighlightedCheck").checked) {
                 onlyHighlighted = true;
                 remove('[data-type="normal"]');
-                localStorage.setItem(`${storagePrefix}onlyHighlightedCheck`, true);
+                sessionStorage.setItem(`${storagePrefix}onlyHighlightedCheck`, true);
             } else {
                 onlyHighlighted = false;
-                localStorage.setItem(`${storagePrefix}onlyHighlightedCheck`, false);
+                sessionStorage.setItem(`${storagePrefix}onlyHighlightedCheck`, false);
             }
         });
 
@@ -242,7 +242,7 @@
                                 let date = new Date(el.date);
                                 let now = new Date();
                                 if (now.getTime() - date.getTime() > 1000 * 60 * 60 * 24 * storageDelay) {
-                                    console.log("delete elements older than "+storageDelay+" day");
+                                    console.log("delete elements older than " + storageDelay + " day");
                                 }
                                 else savedElemClean.push(el);
 
@@ -320,6 +320,57 @@
                 }
             }
         }, { passive: true });
+
+
+        /******** SWIPE / mobile SCROLL ********/
+        let touchstartX = 0;
+        let touchendX = 0;
+        let touchstartY = 0;
+        let touchendY = 0;
+        const chatContainer = document.getElementById('hightlitedMessageChatContainer');
+
+        function checkDirection() {
+            console.log(chatContainer.scrollTop + chatContainer.clientHeight, chatContainer.scrollHeight);
+            if ((Math.abs(touchstartX - touchendX) > 50) || (Math.abs(touchstartY - touchendY) > 50)) {
+                if (touchendX < touchstartX) {
+                    // console.log('swiped left!');
+                }
+                if (touchendX > touchstartX) {
+                    // console.log('swiped right!');
+                }
+                if (touchendY > touchstartY) {
+                    console.log('swiped down!');
+                    scollBottom = false;
+                    show('#chatGoToBottom');
+                }
+                if (touchendY < touchstartY) {
+                    console.log('swiped up!');
+                    chatContainer.addEventListener('scroll', function onScroll(evt) {
+                        // console.log("test  ",this.scrollTop+this.clientHeight, this.scrollHeight);
+                        if (this.scrollTop + this.clientHeight == this.scrollHeight) {
+                            scollBottom = true;
+                            hide('#chatGoToBottom');
+                        }
+                    }, { passive: true });
+
+                    // if (chatContainer.scrollTop + chatContainer.clientHeight >= chatContainer.scrollHeight - 50) {
+                    //     scollBottom = true;
+                    //     hide('#chatGoToBottom');
+                    // }
+                }
+            }
+        }
+
+        document.getElementById('hightlitedMessageChatContainer').addEventListener('touchstart', e => {
+            touchstartX = e.changedTouches[0].screenX;
+            touchstartY = e.changedTouches[0].screenY;
+        })
+
+        document.getElementById('hightlitedMessageChatContainer').addEventListener('touchend', e => {
+            touchendX = e.changedTouches[0].screenX;
+            touchendY = e.changedTouches[0].screenY;
+            checkDirection();
+        })
 
     } //************* END FONCTION PRINCIPALE **************/
     //*********************************************************************************/
