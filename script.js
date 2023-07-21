@@ -330,7 +330,7 @@
         const chatContainer = document.getElementById('hightlitedMessageChatContainer');
 
         function checkDirection() {
-            console.log(chatContainer.scrollTop + chatContainer.clientHeight, chatContainer.scrollHeight);
+            // console.log(chatContainer.scrollTop + chatContainer.clientHeight, chatContainer.scrollHeight);
             if ((Math.abs(touchstartX - touchendX) > 50) || (Math.abs(touchstartY - touchendY) > 50)) {
                 if (touchendX < touchstartX) {
                     // console.log('swiped left!');
@@ -339,12 +339,12 @@
                     // console.log('swiped right!');
                 }
                 if (touchendY > touchstartY) {
-                    console.log('swiped down!');
+                    // console.log('swiped down!');
                     scollBottom = false;
                     show('#chatGoToBottom');
                 }
                 if (touchendY < touchstartY) {
-                    console.log('swiped up!');
+                    // console.log('swiped up!');
                     chatContainer.addEventListener('scroll', function onScroll(evt) {
                         // console.log("test  ",this.scrollTop+this.clientHeight, this.scrollHeight);
                         if (this.scrollTop + this.clientHeight == this.scrollHeight) {
