@@ -2,7 +2,7 @@
 /*** Twitch Highlighted Chat - lite ***/
 /*** By QuentinPerou ***/
 
-/*  lite-v2.2  */
+/*  v2.5  */
 
 (function () {
     document.addEventListener("DOMContentLoaded", initialiser);
@@ -18,7 +18,9 @@
     let messagesSave = true;
     let deleteOldMessages = true;
     let enableModCommand = true;
-    // let mentionIsColorised = false;
+    let mentionIsColorised = false;
+    let nameIsColorized = false;
+    const storageDelay = 7; // in day
 
     /*********************************************************/
     /*                   FONCTION PRINCIPALE                 */
@@ -38,39 +40,100 @@
                     document.getElementById('notCoChannelInputSubmit').click();
         });
 
-        document.getElementById('backToHomeButton').addEventListener('click', function () {
-            ComfyJS.Disconnect();
-            window.location.href = "./";
-        }, { passive: true });
+        document.querySelectorAll('#backToHomeButton, .backToHome').forEach(function (elm) {
+            elm.addEventListener('click', function () {
+                ComfyJS.Disconnect();
+                window.location.href = "./";
+            }, { passive: true });
+        });
 
-        if (sessionStorage.getItem(`${storagePrefix}onlyHighlightedCheck`) != undefined) {
-            document.getElementById("onlyHighlightedCheck").checked = false;
-            onlyHighlighted = false;
+        ///////// get/set only hightlight Setting /////////
+        if (localStorage.getItem(`${storagePrefix}onlyHighlightedCheck`) != undefined) {
+            document.getElementById("onlyHighlightedCheck").checked = JSON.parse(localStorage.getItem(`${storagePrefix}onlyHighlightedCheck`));
+            onlyHighlighted = JSON.parse(localStorage.getItem(`${storagePrefix}onlyHighlightedCheck`));
         }
         document.getElementById("onlyHighlightedCheck").addEventListener("input", function () {
             if (document.getElementById("onlyHighlightedCheck").checked) {
                 onlyHighlighted = true;
                 remove('[data-type="normal"]');
-                sessionStorage.removeItem(`${storagePrefix}onlyHighlightedCheck`);
+                localStorage.setItem(`${storagePrefix}onlyHighlightedCheck`, true);
             } else {
                 onlyHighlighted = false;
-                sessionStorage.setItem(`${storagePrefix}onlyHighlightedCheck`, false);
+                localStorage.setItem(`${storagePrefix}onlyHighlightedCheck`, false);
             }
         });
+
+        ///////// get/set Sound Notif Setting /////////
+        if (localStorage.getItem(`${storagePrefix}highlightedNotifSound`) != undefined) {
+            document.getElementById("highlightedNotifSound").checked = JSON.parse(localStorage.getItem(`${storagePrefix}highlightedNotifSound`));
+            highlightedNotifSound = JSON.parse(localStorage.getItem(`${storagePrefix}highlightedNotifSound`));
+        }
         document.getElementById("highlightedNotifSound").addEventListener("input", function () {
             if (document.getElementById("highlightedNotifSound").checked) {
                 highlightedNotifSound = true;
+                localStorage.setItem(`${storagePrefix}highlightedNotifSound`, true);
             } else {
                 highlightedNotifSound = false;
+                localStorage.setItem(`${storagePrefix}highlightedNotifSound`, false);
             }
         });
+
+        ///////// get/set mod command Setting /////////
+        if (sessionStorage.getItem(`${storagePrefix}enableModCommand`) != undefined) {
+            document.getElementById("enableModCommand").checked = JSON.parse(sessionStorage.getItem(`${storagePrefix}enableModCommand`));
+            enableModCommand = JSON.parse(sessionStorage.getItem(`${storagePrefix}enableModCommand`));
+        }
         document.getElementById("enableModCommand").addEventListener("input", function () {
-            if (document.getElementById("enableModCommand").checked)
+            if (document.getElementById("enableModCommand").checked) {
                 enableModCommand = true;
-            else
+                sessionStorage.setItem(`${storagePrefix}enableModCommand`, true);
+            } else {
                 enableModCommand = false;
+                sessionStorage.setItem(`${storagePrefix}enableModCommand`, false);
+            }
         });
 
+        ///////// get/set colorise mention Setting /////////
+        if (localStorage.getItem(`${storagePrefix}mentionIsColorised`) != undefined) {
+            document.getElementById("mentionIsColorised").checked = JSON.parse(localStorage.getItem(`${storagePrefix}mentionIsColorised`));
+            mentionIsColorised = JSON.parse(localStorage.getItem(`${storagePrefix}mentionIsColorised`));
+        }
+        document.getElementById("mentionIsColorised").addEventListener("input", function () {
+            if (document.getElementById("mentionIsColorised").checked) {
+                mentionIsColorised = true;
+                document.querySelectorAll('.chat-messageMention').forEach(function (element) {
+                    element.classList.remove('off')
+                });
+            } else {
+                mentionIsColorised = false;
+                document.querySelectorAll('.chat-messageMention').forEach(function (element) {
+                    element.classList.add('off')
+                });
+            }
+            localStorage.setItem(`${storagePrefix}mentionIsColorised`, mentionIsColorised);
+        });
+
+        ///////// get/set colorise name Setting /////////
+        if (localStorage.getItem(`${storagePrefix}nameIsColorized`) != undefined) {
+            document.getElementById("nameIsColorized").checked = JSON.parse(localStorage.getItem(`${storagePrefix}nameIsColorized`));
+            nameIsColorized = JSON.parse(localStorage.getItem(`${storagePrefix}nameIsColorized`));
+        }
+        document.getElementById("nameIsColorized").addEventListener("input", function () {
+            if (document.getElementById("nameIsColorized").checked) {
+                nameIsColorized = true;
+                document.querySelectorAll('.chat-lineName').forEach(function (element) {
+                    element.classList.remove('noColor')
+                });
+            } else {
+                nameIsColorized = false;
+                document.querySelectorAll('.chat-lineName').forEach(function (element) {
+                    element.classList.add('noColor')
+                });
+            }
+            localStorage.setItem(`${storagePrefix}nameIsColorized`, nameIsColorized);
+        });
+
+        ///////// get/set Theme Setting /////////
         if (localStorage.getItem(`${storagePrefix}theme`) != undefined) {
             document.querySelector(`#choiceTheme input[value="${localStorage.getItem(`${storagePrefix}theme`)}"]`).checked = true;
             changeTheme(localStorage.getItem(`${storagePrefix}theme`));
@@ -95,6 +158,8 @@
                 document.documentElement.classList.add("styleDarkTheme");
             }
         }
+
+
         document.getElementsByClassName('mainContainer')[0].addEventListener('click', function () {
             document.getElementById('headerBurger').classList.remove('menuVisible');
             document.getElementById('headerNav').classList.remove('menuVisible');
@@ -129,9 +194,9 @@
 
         /***************************/
 
-        console.log(location.search.substr(1));
-        if (location.search.substr(1).split('=')[0] == "channel") {
-            channelInUrl = location.search.substr(1).split('=')[1].toLowerCase();
+        console.log(location.search.substring(1).split('&')[0]);
+        if (location.search.substring(1).split('&')[0].split('=')[0] == "channel") {
+            channelInUrl = location.search.substring(1).split('&')[0].split('=')[1].toLowerCase();
             if (channelInUrl) {
                 ComfyJS.Init(channelInUrl);
 
@@ -166,18 +231,18 @@
                 displayConnectInterface();
 
                 ComfyJS.onConnected = (address, port, isFirstConnect) => {
-                    displayNotif(`Connected to <i>${channelInUrl.toUpperCase()}</i> 's chat`);
+                    displayNotif(`Connected !`);
                     ///// restore saved messages /////
                     if (messagesSave) {
                         if (localStorage.getItem(`${storagePrefix}messagesSave-${channelInUrl}`) != undefined) {
                             let savedElem = JSON.parse(localStorage.getItem(`${storagePrefix}messagesSave-${channelInUrl}`));
                             let savedElemClean = [];
                             savedElem.forEach(function (el) {
-                                //delete el.date if date il older than 5 day
+                                //delete el.date if date is older than X day
                                 let date = new Date(el.date);
                                 let now = new Date();
-                                if (now.getTime() - date.getTime() > 1000 * 60 * 60 * 24 * 5) {
-                                    console.log("delete elements older than 5 day");
+                                if (now.getTime() - date.getTime() > 1000 * 60 * 60 * 24 * storageDelay) {
+                                    console.log("delete elements older than "+storageDelay+" day");
                                 }
                                 else savedElemClean.push(el);
 
@@ -207,7 +272,7 @@
                 }
                 ComfyJS.onCommand = (user, command, message, flags, extra) => {
                     // console.log(user, command, message, flags, extra);
-                    if (enableModCommand && command === "+hmsg" && (flags.broadcaster || flags.mod || user.toLowerCase() == 'quentinperou')) {
+                    if (enableModCommand && command === "hlt" && (flags.broadcaster || flags.mod || user.toLowerCase() == 'quentinperou')) {  //oui j'ai un privilège mdr
                         if (!flags.highlighted) {
                             let thisMessage = addMessage(user, message, flags, false, extra, false);
                             thisMessage.style.backgroundColor = "var(--main-bg-color0)";
@@ -223,6 +288,17 @@
                     } else if (flags.highlighted) {
                         addMessage(user, '!' + command + ' ' + message, flags, false, extra);
                     }
+                }
+                ComfyJS.onMessageDeleted = (id, extra) => {
+                    // console.log("message-delete: ", id, extra); /////// DEBUG ///////
+                    document.getElementById(id).remove();
+                }
+                ComfyJS.onSub = (user, message, subTierInfo, extra) => {
+                    // console.log("onSub: ", user, message, subTierInfo, extra); /////// DEBUG ///////
+                }
+                ComfyJS.onResub = (user, message, streamMonths, cumulativeMonths, subTierInfo, extra) => {
+                    // console.log('onResub: ', user, message, streamMonths, cumulativeMonths, subTierInfo, extra); /////// DEBUG ///////
+                    // addMessage(user, message, {subscriber:true}, false, extra);
                 }
                 ComfyJS.onError = (error) => {
                     console.log(error);
@@ -244,10 +320,6 @@
                 }
             }
         }, { passive: true });
-
-        // let updateMsg = addMessage("► System ◄", "(25/01/2022) UPDATE ! You can now change the color theme ! Go to menu ;) ", {}, false, {});
-        // updateMsg.parentElement.style.backgroundColor = "var(--bg-adminMsg)";
-        // updateMsg.parentElement.addEventListener('click', function () { this.remove(); });
 
     } //************* END FONCTION PRINCIPALE **************/
     //*********************************************************************************/
@@ -298,7 +370,7 @@
             date = new Date();
             dateUndefined = true;
         }
-        // console.log(user, message, flags, self, extra, isArchive);
+        // console.log(user, message, flags, self, extra, isArchive); ///////// DEBUG /////////
         let thisMsgId = extra.id;
         let leMessage = message.toString();
 
@@ -319,6 +391,7 @@
         //////// Create message div ////////
         let newMessageDiv = document.createElement('div');
         newMessageDiv.classList.add("chat-lineMessage");
+        newMessageDiv.id = thisMsgId;
 
         let newMessageName = document.createElement('div');
         newMessageName.classList.add("chat-lineNameDiv");
@@ -327,7 +400,7 @@
                                     ${flags.vip ? '<img src="img/vip.png" title="VIP" class="chat-lineBadge">' : ''}
                                     ${flags.broadcaster ? '<img src="img/broadcaster.png" title="Broadcaster" class="chat-lineBadge">' : ''}
                                     ${flags.subscriber ? `<img src="img/sub.png" title="${extra.userState['badge-info'].subscriber.match(/[0-9]+$/g)}-Month Subscriber ${badgeInfos}" class="chat-lineBadge">` : ''}
-                                    <span class="chat-lineName" translate="no">${user}</span>`;
+                                    <span class="chat-lineName" translate="no" style="color:${extra.userColor}">${user}</span>`;
         if (!isArchive || !dateUndefined) {
             let newMessageTime = document.createElement('span');
             newMessageTime.classList.add("chat-messageTime");
@@ -341,6 +414,8 @@
                 newMessageDiv.setAttribute("data-archive", true);
             }
         }
+        if (nameIsColorized == false)
+            newMessageName.querySelector('.chat-lineName').classList.add('noColor');
 
         let messageSeparator = document.createElement('span');
         messageSeparator.classList.add("chat-messageSeparator");
@@ -402,7 +477,7 @@
                     let emoteName = messageTexte.substring(emotePosition[0], parseInt(emotePosition[1], 10) + 1);
                     if (!(emotesName.some(elem => elem === emoteName))) {
                         emotesName.push(emoteName);
-                        messageWithEmote = messageWithEmote.replaceAll(emoteName, `</span><img alt="${emoteName}" title="${emoteName}" class="chat-messageEmote" src="https://static-cdn.jtvnw.net/emoticons/v1/${key}/1.0"><span class="messageFragment">`);
+                        messageWithEmote = messageWithEmote.replaceAll(emoteName, `</span><img alt="${emoteName}" title="${emoteName}" class="chat-messageEmote" src="https://static-cdn.jtvnw.net/emoticons/v2/${key}/default/dark/1.0"><span class="messageFragment">`);
                     }
                 }
             }
@@ -410,13 +485,11 @@
             messageContent.classList.add('chat-message-withEmote');
         }
 
-        // if (mentionIsColorised) {
-        //     let messageMention = messageContent.innerHTML;
-        //     let mentionMatch = /(@[a-zA-Z0-9]+)/gim;
-        //     console.log(mentionMatch);
-        //     messageMention = messageMention.replace(mentionMatch, '<span class="chat-messageMention">$1</span>');
-        //     messageContent.innerHTML = messageMention;
-        // }
+        ////// detect mentions
+        let messageMention = messageContent.innerHTML;
+        let mentionMatch = /(@[a-zA-Z0-9_]+)/gim;
+        messageMention = messageMention.replace(mentionMatch, `<span class="chat-messageMention ${mentionIsColorised ? '' : 'off'}">$1</span>`);
+        messageContent.innerHTML = messageMention;
 
         ///// Delete old message 
         if (deleteOldMessages && scollBottom) {
