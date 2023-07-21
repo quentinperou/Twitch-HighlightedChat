@@ -3,8 +3,8 @@ const link_json = document.getElementById('download-history-json');
 const link_txt = document.getElementById('download-history-txt');
 
 // current channel
-const channelInUrl = location.search.substring(1).split('=')[1].toLowerCase();
-console.log(channelInUrl);
+const channelInUrl = location.search.substring(1).split('&')[0].split('=')[1].toLowerCase();
+// console.log(channelInUrl);
 
 
 link_json.addEventListener('click', function (e) {
@@ -15,7 +15,7 @@ link_json.addEventListener('click', function (e) {
     // Create a blog object with the file content which you want to add to the file
     const file = new Blob([content], { type: 'text/plain' });
 
-    
+    // Create a URL for the blog object and insert it into an anchor element
     const link = document.createElement("a");
 
     // Add file content in the object URL
@@ -31,7 +31,6 @@ link_json.addEventListener('click', function (e) {
 link_txt.addEventListener('click', function (e) {
     //get local storage data
     const content = localStorage.getItem("HgltCt-messagesSave-" + channelInUrl);
-    console.log( " test json");
 
     const data = JSON.parse(content);
 
@@ -40,7 +39,7 @@ link_txt.addEventListener('click', function (e) {
     // Create a blog object with the file content which you want to add to the file
     const file2 = new Blob([result], { type: 'text/plain' });
 
-
+    // Create a URL for the blog object and insert it into an anchor element
     const link = document.createElement("a");
 
     // Add file content in the object URL

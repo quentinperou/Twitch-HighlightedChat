@@ -17,7 +17,7 @@ upload_bt.addEventListener('click', function (e) {
         reader.onload = readerEvent => {
             const content = readerEvent.target.result; // this is the content!
             const data = JSON.parse(content);
-            console.log(data);
+            // console.log(data);
             const channelInUrl = location.search.substring(1).split('&')[0].split('=')[1].toLowerCase();
 
             //check if channel is the same
