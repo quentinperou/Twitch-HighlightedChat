@@ -1,11 +1,9 @@
 # Twitch-HighlightedChat  
 
-<!-- This is the **lite** version of the project.   -->
-
 A tool for Twitch streamers. This web page allows you to display only the highlighted messages of your Twitch chat.
 
 <!-- ➜ https://highlightedchat.quentinperou.fr   -->
-➜ https://highlightedchat-lite.netlify.app  
+➜ https://highlightedchat.netlify.app  
 
 <br>
 
@@ -13,7 +11,7 @@ _Inspired by [Ponce](https://twitch.tv/ponce)_
 _Made by [QuentinPerou](https://twitch.tv/quentinperou)_ 
 
 Host on Netlify.  
-[![Netlify Status](https://api.netlify.com/api/v1/badges/f6529eb4-9a06-45b5-a860-8c6c962c71fb/deploy-status)](https://app.netlify.com/sites/highlightedchat-lite/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/f6529eb4-9a06-45b5-a860-8c6c962c71fb/deploy-status)](https://app.netlify.com/sites/highlightedchat/deploys)
 
 <!-- <div align="center">
   <img src="preview.png" style="width:60%">
